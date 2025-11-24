@@ -1,10 +1,15 @@
-import { StatusBar, Text, View } from 'react-native';
+import { StatusBar } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import RootNavigator from './navigation/RootNavigator';
+import { NavigationContainer } from '@react-navigation/native';
 
 export default function App() {
   return (
-    <View>
+    <SafeAreaProvider>
       <StatusBar barStyle={'default'} />
-      <Text>Hello World!</Text>
-    </View>
+      <NavigationContainer>
+        <RootNavigator />
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 }

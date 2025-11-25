@@ -7,16 +7,15 @@ const Stack = createNativeStackNavigator<RootParamList>();
 
 export default function RootNavigator() {
   // TODO: pending auth logic
-  const isAuthenticated = false;
-  const initialRoute: keyof RootParamList = isAuthenticated ? 'App' : 'Auth';
+  const isAuthenticated = true;
 
   return (
-    <Stack.Navigator
-      initialRouteName={initialRoute}
-      screenOptions={{ headerShown: false }}
-    >
-      <Stack.Screen name="Auth" component={AuthNavigator} />
-      <Stack.Screen name="App" component={AppNavigator} />
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      {isAuthenticated ? (
+        <Stack.Screen name="App" component={AppNavigator} />
+      ) : (
+        <Stack.Screen name="Auth" component={AuthNavigator} />
+      )}
     </Stack.Navigator>
   );
 }

@@ -4,18 +4,28 @@ import HomeScreen from '../screens/app/HomeScreen';
 import AnalyticsScreen from '../screens/app/AnalyticsScreen';
 import BudgetScreen from '../screens/app/BudgetScreen';
 import ProfileScreen from '../screens/app/ProfileScreen';
+import AddTransactionScreen from '../screens/app/AddTransactionScreen';
 import {
   AnalyticsIcon,
   BudgetIcon,
   HomeIcon,
   ProfileIcon,
 } from '../utils/tab-icons';
+import NewTransactionButton from '../components/NewTransactionButton';
 
 const Tab = createBottomTabNavigator<AppParamList>();
 
 export default function AppNavigator() {
   return (
-    <Tab.Navigator initialRouteName="Home">
+    <Tab.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        tabBarStyle: {
+          borderTopStartRadius: 15,
+          borderEndStartRadius: 15,
+        },
+      }}
+    >
       <Tab.Screen
         name="Home"
         component={HomeScreen}
@@ -29,6 +39,11 @@ export default function AppNavigator() {
         options={{
           tabBarIcon: AnalyticsIcon,
         }}
+      />
+      <Tab.Screen
+        name="AddTransaction"
+        component={AddTransactionScreen}
+        options={{ tabBarButton: NewTransactionButton }}
       />
       <Tab.Screen
         name="Budget"

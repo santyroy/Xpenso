@@ -8,7 +8,7 @@ const Stack = createNativeStackNavigator<AppStackParamList>();
 
 export default function AppStackNavigator() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerTitleAlign: 'center' }}>
       <Stack.Screen name="AddBudget" component={AddBudgetScreen} />
       <Stack.Screen name="AddTransaction" component={AddTransactionScreen} />
       <Stack.Screen name="Transactions" component={TransactionsScreen} />

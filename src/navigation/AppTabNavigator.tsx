@@ -20,6 +20,7 @@ export default function AppTabNavigator() {
     <Tab.Navigator
       initialRouteName="Home"
       screenOptions={{
+        headerShown: false,
         tabBarStyle: {
           borderTopStartRadius: 15,
           borderEndStartRadius: 15,

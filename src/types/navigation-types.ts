@@ -1,4 +1,4 @@
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { NavigatorScreenParams } from '@react-navigation/native';
 
 export type RootParamList = {
   Auth: undefined;
@@ -10,14 +10,20 @@ export type AuthParamList = {
 };
 
 export type AppParamList = {
-  Home: undefined;
-  Analytics: undefined;
-  AddTransaction: undefined;
-  Budget: undefined;
-  Profile: undefined;
+  AppTabs: undefined;
+  AppStacks: NavigatorScreenParams<AppStackParamList>;
 };
 
-export type AddTransactionScreenNavigationProp = BottomTabNavigationProp<
-  AppParamList,
-  'AddTransaction'
->;
+export type AppTabParamList = {
+  Home: undefined;
+  Analytics: undefined;
+  Budget: undefined;
+  Profile: undefined;
+  AddTransactionButton: undefined;
+};
+
+export type AppStackParamList = {
+  AddTransaction: undefined;
+  AddBudget: undefined;
+  Transactions: undefined;
+};

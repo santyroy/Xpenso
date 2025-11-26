@@ -1,14 +1,17 @@
 import { Pressable, StyleSheet, View } from 'react-native';
 import { useNavigation, useTheme } from '@react-navigation/native';
 import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
-import { AddTransactionScreenNavigationProp } from '../types/navigation-types';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { AppParamList } from '../types/navigation-types';
+
+type NavigationProp = NativeStackNavigationProp<AppParamList, 'AppStacks'>;
 
 export default function NewTransactionButton() {
   const { colors } = useTheme();
-  const navigation = useNavigation<AddTransactionScreenNavigationProp>();
+  const navigation = useNavigation<NavigationProp>();
 
   const handleAddTransaction = () => {
-    navigation.navigate('AddTransaction');
+    navigation.navigate('AppStacks', { screen: 'AddTransaction' });
   };
 
   return (

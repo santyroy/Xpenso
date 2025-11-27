@@ -8,24 +8,13 @@ type Props = {
   setTransactionType: (type: TransactionType) => void;
 };
 
-export default function TransactionTypeToggleButtons({
-  transactionType,
-  setTransactionType,
-}: Props) {
+export default function TransactionTypeToggleButtons(props: Props) {
   const { colors } = useTheme();
 
   return (
     <View style={[styles.container, { backgroundColor: colors.card }]}>
-      <TransactionTypeButton
-        transactionType={transactionType}
-        setTransactionType={setTransactionType}
-        type={'expense'}
-      />
-      <TransactionTypeButton
-        transactionType={transactionType}
-        setTransactionType={setTransactionType}
-        type={'income'}
-      />
+      <TransactionTypeButton type={'expense'} {...props} />
+      <TransactionTypeButton type={'income'} {...props} />
     </View>
   );
 }

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TransactionType } from '../../types/transactions-types';
 import TransactionTypeToggleButtons from '../../components/TransactionTypeToogleButtons';
+import ExpenseForm from '../../components/ExpenseForm';
 
 export default function AddTransactionScreen() {
   const [transactionType, setTransactionType] =
@@ -14,6 +15,10 @@ export default function AddTransactionScreen() {
           transactionType={transactionType}
           setTransactionType={setTransactionType}
         />
+      </View>
+
+      <View>
+        <ExpenseForm />
       </View>
     </View>
   );

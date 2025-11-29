@@ -9,7 +9,7 @@ import { useAppTheme } from '../hooks/useAppTheme';
 
 type Props = {
   state: string;
-  setState: (state: string) => void;
+  setState?: (state: string) => void;
   style?: StyleProp<TextStyle>;
 } & TextInputProps;
 
@@ -19,7 +19,7 @@ export default function Input({ state, setState, style, ...rest }: Props) {
   return (
     <TextInput
       value={state}
-      onChangeText={setState}
+      onChangeText={text => setState?.(text)}
       placeholderTextColor={colors.border}
       cursorColor={colors.text}
       style={[

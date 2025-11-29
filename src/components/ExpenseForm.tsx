@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import Label from './Label';
 import Input from './Input';
 import Button from './Button';
+import CalendarButton from './CalendarButton';
 import CategoryList from './CategoryList';
 import { expenseCategories } from '../utils/categories';
 import { Category } from '../types/transactions-types';
@@ -12,6 +13,10 @@ export default function ExpenseForm() {
   const [category, setCategory] = useState<Category>();
   const [date, setDate] = useState('');
   const [note, setNote] = useState('');
+
+  const handleDatePicker = () => {
+    console.log('Calendar clicked');
+  };
 
   const handleAddExpense = () => {
     console.log({ amount, category, date, note });
@@ -38,12 +43,19 @@ export default function ExpenseForm() {
       </View>
       <View style={styles.formGroup}>
         <Label text="Date*" />
-        <Input
-          state={date}
-          setState={setDate}
-          placeholder="DD/MM/YYYY"
-          keyboardType="numeric"
-        />
+        <View>
+          <Input
+            state={date}
+            setState={setDate}
+            placeholder="DD/MM/YYYY"
+            keyboardType="numeric"
+          />
+          <CalendarButton
+            style={styles.calendarBtn}
+            hitSlop={20}
+            onPress={handleDatePicker}
+          />
+        </View>
       </View>
       <View style={styles.formGroup}>
         <Label text="Note(optional)" />
@@ -76,4 +88,10 @@ const styles = StyleSheet.create({
   },
   formGroup: { gap: 10 },
   inputArea: { height: 100 },
+  calendarBtn: {
+    height: '100%',
+    position: 'absolute',
+    right: 15,
+    justifyContent: 'center',
+  },
 });

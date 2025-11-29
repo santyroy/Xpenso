@@ -1,5 +1,9 @@
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
+import {
+  DateTimePickerAndroid,
+  DateTimePickerEvent,
+} from '@react-native-community/datetimepicker';
 import Label from './Label';
 import Input from './Input';
 import Button from './Button';
@@ -14,8 +18,20 @@ export default function ExpenseForm() {
   const [date, setDate] = useState('');
   const [note, setNote] = useState('');
 
+  const onDateChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
+    const currentDate = selectedDate;
+    if (currentDate) {
+      setDate(currentDate.toLocaleDateString('en-GB'));
+    }
+  };
+
   const handleDatePicker = () => {
-    console.log('Calendar clicked');
+    DateTimePickerAndroid.open({
+      value: new Date(Date.now()),
+      onChange: onDateChange,
+      mode: 'date',
+      is24Hour: true,
+    });
   };
 
   const handleAddExpense = () => {
@@ -44,12 +60,7 @@ export default function ExpenseForm() {
       <View style={styles.formGroup}>
         <Label text="Date*" />
         <View>
-          <Input
-            state={date}
-            setState={setDate}
-            placeholder="DD/MM/YYYY"
-            keyboardType="numeric"
-          />
+          <Input state={date} placeholder="DD/MM/YYYY" readOnly />
           <CalendarButton
             style={styles.calendarBtn}
             hitSlop={20}

@@ -18,9 +18,7 @@ export default function AddTransactionScreen() {
         />
       </View>
 
-      <View>
-        {transactionType === 'expense' ? <ExpenseForm /> : <IncomeForm />}
-      </View>
+      {transactionType === 'expense' ? <ExpenseForm /> : <IncomeForm />}
     </View>
   );
 }

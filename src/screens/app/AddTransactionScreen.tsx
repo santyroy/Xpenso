@@ -1,5 +1,11 @@
 import { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  KeyboardAvoidingView,
+  ScrollView,
+  Platform,
+} from 'react-native';
 import { TransactionType } from '../../types/transactions-types';
 import TransactionTypeToggleButtons from '../../components/TransactionTypeToogleButtons';
 import ExpenseForm from '../../components/ExpenseForm';
@@ -10,7 +16,11 @@ export default function AddTransactionScreen() {
     useState<TransactionType>('expense');
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 100}
+      style={styles.container}
+    >
       <View style={styles.toggleBtnContainer}>
         <TransactionTypeToggleButtons
           transactionType={transactionType}
@@ -18,8 +28,10 @@ export default function AddTransactionScreen() {
         />
       </View>
 
-      {transactionType === 'expense' ? <ExpenseForm /> : <IncomeForm />}
-    </View>
+      <ScrollView keyboardShouldPersistTaps="handled">
+        {transactionType === 'expense' ? <ExpenseForm /> : <IncomeForm />}
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 

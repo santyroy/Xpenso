@@ -28,7 +28,10 @@ export default function AddTransactionScreen() {
         />
       </View>
 
-      <ScrollView keyboardShouldPersistTaps="handled">
+      <ScrollView
+        keyboardShouldPersistTaps="handled"
+        contentContainerStyle={styles.scrollViewContent}
+      >
         {transactionType === 'expense' ? <ExpenseForm /> : <IncomeForm />}
       </ScrollView>
     </KeyboardAvoidingView>
@@ -38,4 +41,5 @@ export default function AddTransactionScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1 },
   toggleBtnContainer: { marginTop: 20 },
+  scrollViewContent: { paddingBottom: 10 },
 });

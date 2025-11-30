@@ -7,7 +7,7 @@ import { CustomTheme } from './utils/theme';
 export default function App() {
   return (
     <SafeAreaProvider>
-      <StatusBar barStyle={'default'} />
+      <StatusBar barStyle={'default'} backgroundColor={'transparent'} />
       <NavigationContainer theme={CustomTheme}>
         <RootNavigator />
       </NavigationContainer>

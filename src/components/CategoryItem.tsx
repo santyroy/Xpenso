@@ -40,7 +40,7 @@ export default function CategoryIcon({ category, state, setState }: Props) {
         size={24}
         color={colors.text}
       />
-      <Text style={[{ color: colors.text }]}>{categoryName}</Text>
+      <Text style={[styles.text, { color: colors.text }]}>{categoryName}</Text>
     </Pressable>
   );
 }
@@ -55,4 +55,5 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
   },
+  text: { fontSize: 12 },
 });

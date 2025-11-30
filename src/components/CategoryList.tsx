@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Category } from '../types/transactions-types';
 import CategoryIcon from './CategoryItem';
 
@@ -9,20 +9,21 @@ type Props = {
 };
 
 export default function CategoryList({ data, ...props }: Props) {
+  if (data.length === 0) return;
+
   return (
-    <FlatList
-      data={data}
-      renderItem={({ item }) => <CategoryIcon category={item} {...props} />}
-      keyExtractor={item => item.id.toString()}
-      numColumns={4}
-      contentContainerStyle={styles.container}
-      columnWrapperStyle={styles.container}
-    />
+    <View style={styles.container}>
+      {data.map(category => (
+        <CategoryIcon key={category.id} category={category} {...props} />
+      ))}
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     gap: 10,
   },
 });

@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text } from 'react-native';
+import { Dimensions, Pressable, StyleSheet, Text } from 'react-native';
 import { Category } from '../types/transactions-types';
 import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 import { useAppTheme } from '../hooks/useAppTheme';
@@ -8,6 +8,11 @@ type Props = {
   state: Category | undefined;
   setState: (state: Category) => void;
 };
+
+const screenWidth = Dimensions.get('window').width;
+const GAP = 24;
+const NUM_COLUMNS = 4;
+const ITEM_WIDTH = (screenWidth - GAP * (NUM_COLUMNS - 1)) / NUM_COLUMNS;
 
 export default function CategoryIcon({ category, state, setState }: Props) {
   const { colors } = useAppTheme();
@@ -42,9 +47,10 @@ export default function CategoryIcon({ category, state, setState }: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    width: ITEM_WIDTH,
     justifyContent: 'space-evenly',
     alignItems: 'center',
+    gap: 5,
     borderWidth: 1,
     borderRadius: 10,
     padding: 10,

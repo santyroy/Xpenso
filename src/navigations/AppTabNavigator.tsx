@@ -24,7 +24,6 @@ export default function AppTabNavigator() {
         tabBarStyle: {
           borderTopStartRadius: 15,
           borderEndStartRadius: 15,
-          height: 55,
         },
       }}
     >

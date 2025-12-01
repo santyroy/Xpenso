@@ -9,14 +9,18 @@ import Input from './Input';
 import Button from './Button';
 import CalendarButton from './CalendarButton';
 import CategoryList from './CategoryList';
+import Error from './Error';
 import { incomeCategories } from '../utils/categories';
+import { isValidDate } from '../utils/date-utils';
 import { Category } from '../types/transactions-types';
+import { FormError } from '../types/errors-types';
 
 export default function IncomeForm() {
   const [amount, setAmount] = useState('');
   const [category, setCategory] = useState<Category>();
   const [date, setDate] = useState('');
   const [note, setNote] = useState('');
+  const [errors, setErrors] = useState<FormError>({});
 
   const onDateChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
     const currentDate = selectedDate;
@@ -34,8 +38,32 @@ export default function IncomeForm() {
     });
   };
 
+  const validateForm = () => {
+    let err: FormError = {};
+
+    if (amount === '') {
+      err.amount = 'Amount is required';
+    } else if (isNaN(parseFloat(amount))) {
+      err.amount = 'Invalid Amount';
+    }
+    if (!category) {
+      err.category = 'Category is required';
+    }
+    if (date === '') {
+      err.date = 'Date is required';
+    } else if (!isValidDate(date)) {
+      err.date = 'Invalid Date';
+    }
+
+    setErrors(err);
+    return Object.values(err).length === 0;
+  };
+
   const handleAddIncome = () => {
     console.log({ amount, category, date, note });
+    if (validateForm()) {
+      console.log('Form validation successful');
+    }
   };
 
   return (
@@ -48,6 +76,7 @@ export default function IncomeForm() {
           placeholder="Enter Amount"
           keyboardType="decimal-pad"
         />
+        {errors.amount && <Error errorMsg={errors.amount} />}
       </View>
       <View style={styles.formGroup}>
         <Label text="Category*" />
@@ -56,6 +85,7 @@ export default function IncomeForm() {
           state={category}
           setState={setCategory}
         />
+        {errors.category && <Error errorMsg={errors.category} />}
       </View>
       <View style={styles.formGroup}>
         <Label text="Date*" />
@@ -67,6 +97,7 @@ export default function IncomeForm() {
             onPress={handleDatePicker}
           />
         </View>
+        {errors.date && <Error errorMsg={errors.date} />}
       </View>
       <View style={styles.formGroup}>
         <Label text="Note(optional)" />

@@ -15,3 +15,11 @@ export type Transaction = {
   date: Date;
   note?: string;
 };
+
+export type TransactionForm = {
+  type: TransactionType;
+  amount: string;
+  category: Category | undefined;
+  date: string;
+  note?: string;
+};

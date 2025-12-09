@@ -7,6 +7,6 @@ export default class Transaction extends Model {
   @text('type') type!: string;
   @field('amount') amount!: number;
   @text('category') category!: string;
-  @date('date') date!: number;
+  @date('date') date!: Date;
   @text('note') note!: string;
 }

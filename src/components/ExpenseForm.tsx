@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Label from './Label';
 import Input from './Input';
 import Button from './Button';
@@ -7,41 +8,50 @@ import CalendarButton from './CalendarButton';
 import CategoryList from './CategoryList';
 import Error from './Error';
 import { expenseCategories } from '../utils/categories';
-import { Category } from '../types/transactions-types';
+import { Category, TransactionForm } from '../types/transactions-types';
 import { FormError } from '../types/errors-types';
+import { addTransaction } from '../db/repository/transaction-repository';
+import { validateForm } from '../utils/form-utils';
+import { AppParamList } from '../types/navigation-types';
 
-export default function ExpenseForm() {
+type ExpenseFormProps = {
+  navigation: NativeStackNavigationProp<AppParamList>;
+};
+
+export default function ExpenseForm({ navigation }: ExpenseFormProps) {
   const [amount, setAmount] = useState('');
   const [category, setCategory] = useState<Category>();
   const [date, setDate] = useState('');
   const [note, setNote] = useState('');
   const [errors, setErrors] = useState<FormError>({});
 
-  const validateForm = () => {
-    let err: FormError = {};
-
-    if (amount === '') {
-      err.amount = 'Amount is required';
-    } else if (isNaN(parseFloat(amount))) {
-      err.amount = 'Invalid Amount';
-    }
-    if (!category) {
-      err.category = 'Category is required';
-    }
-    if (date === '') {
-      err.date = 'Date is required';
-    } else if (isNaN(Date.parse(date))) {
-      err.date = 'Invalid Date';
-    }
-
-    setErrors(err);
-    return Object.values(err).length === 0;
-  };
-
   const handleAddExpense = () => {
-    console.log({ amount, category, date, note });
-    if (validateForm()) {
-      console.log('Form validation successful');
+    const formData: TransactionForm = {
+      type: 'expense',
+      amount,
+      category,
+      date,
+      note,
+    };
+    if (validateForm(formData, setErrors)) {
+      if (!category) return;
+      const expAmt = parseFloat(amount);
+      const expDate = new Date(date);
+      addTransaction({
+        ...formData,
+        amount: expAmt,
+        category: category,
+        date: expDate,
+      });
+
+      // reset form
+      setAmount('');
+      setCategory(undefined);
+      setDate('');
+      setNote('');
+
+      // navigate to home screen
+      navigation.replace('AppTabs', { screen: 'Home' });
     }
   };
 

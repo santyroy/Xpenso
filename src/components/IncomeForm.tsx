@@ -1,9 +1,5 @@
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import {
-  DateTimePickerAndroid,
-  DateTimePickerEvent,
-} from '@react-native-community/datetimepicker';
 import Label from './Label';
 import Input from './Input';
 import Button from './Button';
@@ -21,22 +17,6 @@ export default function IncomeForm() {
   const [date, setDate] = useState('');
   const [note, setNote] = useState('');
   const [errors, setErrors] = useState<FormError>({});
-
-  const onDateChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
-    const currentDate = selectedDate;
-    if (currentDate) {
-      setDate(currentDate.toLocaleDateString('en-GB'));
-    }
-  };
-
-  const handleDatePicker = () => {
-    DateTimePickerAndroid.open({
-      value: new Date(Date.now()),
-      onChange: onDateChange,
-      mode: 'date',
-      is24Hour: true,
-    });
-  };
 
   const validateForm = () => {
     let err: FormError = {};
@@ -92,9 +72,9 @@ export default function IncomeForm() {
         <View>
           <Input state={date} placeholder="DD/MM/YYYY" readOnly />
           <CalendarButton
+            setDate={setDate}
             style={styles.calendarButton}
             hitSlop={20}
-            onPress={handleDatePicker}
           />
         </View>
         {errors.date && <Error errorMsg={errors.date} />}

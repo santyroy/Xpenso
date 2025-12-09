@@ -1,9 +1,5 @@
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import {
-  DateTimePickerAndroid,
-  DateTimePickerEvent,
-} from '@react-native-community/datetimepicker';
 import Label from './Label';
 import Input from './Input';
 import Button from './Button';
@@ -11,7 +7,6 @@ import CalendarButton from './CalendarButton';
 import CategoryList from './CategoryList';
 import Error from './Error';
 import { expenseCategories } from '../utils/categories';
-import { isValidDate } from '../utils/date-utils';
 import { Category } from '../types/transactions-types';
 import { FormError } from '../types/errors-types';
 
@@ -21,22 +16,6 @@ export default function ExpenseForm() {
   const [date, setDate] = useState('');
   const [note, setNote] = useState('');
   const [errors, setErrors] = useState<FormError>({});
-
-  const onDateChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
-    const currentDate = selectedDate;
-    if (currentDate) {
-      setDate(currentDate.toLocaleDateString('en-GB'));
-    }
-  };
-
-  const handleDatePicker = () => {
-    DateTimePickerAndroid.open({
-      value: new Date(Date.now()),
-      onChange: onDateChange,
-      mode: 'date',
-      is24Hour: true,
-    });
-  };
 
   const validateForm = () => {
     let err: FormError = {};
@@ -51,7 +30,7 @@ export default function ExpenseForm() {
     }
     if (date === '') {
       err.date = 'Date is required';
-    } else if (!isValidDate(date)) {
+    } else if (isNaN(Date.parse(date))) {
       err.date = 'Invalid Date';
     }
 
@@ -92,9 +71,9 @@ export default function ExpenseForm() {
         <View>
           <Input state={date} placeholder="DD/MM/YYYY" readOnly />
           <CalendarButton
+            setDate={setDate}
             style={styles.calendarBtn}
             hitSlop={20}
-            onPress={handleDatePicker}
           />
         </View>
         {errors.date && <Error errorMsg={errors.date} />}

@@ -9,6 +9,7 @@ export type Category = {
 };
 
 export type Transaction = {
+  type: TransactionType;
   amount: number;
   category: Category;
   date: Date;

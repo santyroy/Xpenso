@@ -1,8 +1,8 @@
 import { NavigatorScreenParams } from '@react-navigation/native';
 
 export type RootParamList = {
-  Auth: undefined;
-  App: undefined;
+  Auth: NavigatorScreenParams<AuthParamList>;
+  App: NavigatorScreenParams<AppParamList>;
 };
 
 export type AuthParamList = {
@@ -10,7 +10,7 @@ export type AuthParamList = {
 };
 
 export type AppParamList = {
-  AppTabs: undefined;
+  AppTabs: NavigatorScreenParams<AppTabParamList>;
   AppStacks: NavigatorScreenParams<AppStackParamList>;
 };
 

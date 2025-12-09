@@ -7,3 +7,10 @@ export type Category = {
   name: string;
   iconName: FontAwesome6SolidIconName;
 };
+
+export type Transaction = {
+  amount: number;
+  category: Category;
+  date: Date;
+  note?: string;
+};

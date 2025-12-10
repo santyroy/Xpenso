@@ -6,6 +6,7 @@ export type Category = {
   id: number;
   name: string;
   iconName: FontAwesome6SolidIconName;
+  color: string;
 };
 
 export type Transaction = {

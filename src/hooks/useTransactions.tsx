@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Model } from '@nozbe/watermelondb';
-import { getAllTransactions } from '../db/repository/transaction-repository';
+import {
+  getAllTransactions,
+  getTransactionsByLimit,
+} from '../db/repository/transaction-repository';
 import TransactionModel from '../db/models/Transaction';
 import { extractCategory } from '../utils/categories';
 import { Transaction, TransactionType } from '../types/transactions-types';
@@ -22,7 +25,7 @@ const reducer = (acc: Transaction[], t: Model): Transaction[] => {
   return acc;
 };
 
-export const useTransactions = () => {
+export const useTransactions = (limit?: number) => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -33,7 +36,12 @@ export const useTransactions = () => {
       setError('');
 
       try {
-        const rows = await getAllTransactions();
+        let rows;
+        if (limit && limit > 0) {
+          rows = await getTransactionsByLimit(limit);
+        } else {
+          rows = await getAllTransactions();
+        }
         const data = rows.reduce(reducer, [] as Transaction[]);
         setTransactions(data);
       } catch (err) {
@@ -45,7 +53,7 @@ export const useTransactions = () => {
     };
 
     fetchTransactions();
-  }, []);
+  }, [limit]);
 
   return { transactions, isLoading, error };
 };

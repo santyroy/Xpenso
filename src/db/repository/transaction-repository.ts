@@ -26,6 +26,13 @@ export async function getAllTransactions() {
   return await transactionsCollection.query(Q.sortBy('date', 'desc')).fetch();
 }
 
+// Fetch limited transactions
+export async function getTransactionsByLimit(limit: number) {
+  return await transactionsCollection
+    .query(Q.sortBy('date', 'desc'), Q.take(limit))
+    .fetch();
+}
+
 // Fetch transactions by category
 export async function getTransactionsByCategory(category: string) {
   return await transactionsCollection

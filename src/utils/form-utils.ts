@@ -18,6 +18,21 @@ export function isValidDate(date: string): boolean {
   );
 }
 
+export function generateTimestamp(date: string) {
+  const selectedDate = new Date(date);
+  const now = new Date();
+  const finalTimestamp = new Date(
+    selectedDate.getFullYear(),
+    selectedDate.getMonth(),
+    selectedDate.getDate(),
+    now.getHours(),
+    now.getMinutes(),
+    now.getSeconds(),
+    now.getMilliseconds(),
+  );
+  return finalTimestamp;
+}
+
 type setErrors = (err: FormError) => void;
 
 export const validateForm = (

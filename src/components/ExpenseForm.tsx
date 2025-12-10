@@ -11,7 +11,7 @@ import { expenseCategories } from '../utils/categories';
 import { Category, TransactionForm } from '../types/transactions-types';
 import { FormError } from '../types/errors-types';
 import { addTransaction } from '../db/repository/transaction-repository';
-import { validateForm } from '../utils/form-utils';
+import { generateTimestamp, validateForm } from '../utils/form-utils';
 import { AppParamList } from '../types/navigation-types';
 
 type ExpenseFormProps = {
@@ -36,7 +36,7 @@ export default function ExpenseForm({ navigation }: ExpenseFormProps) {
     if (validateForm(formData, setErrors)) {
       if (!category) return;
       const expAmt = parseFloat(amount);
-      const expDate = new Date(date);
+      const expDate = generateTimestamp(date);
       addTransaction({
         ...formData,
         id: '',

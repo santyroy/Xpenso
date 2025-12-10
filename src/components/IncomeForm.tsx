@@ -8,7 +8,7 @@ import CalendarButton from './CalendarButton';
 import CategoryList from './CategoryList';
 import Error from './Error';
 import { incomeCategories } from '../utils/categories';
-import { validateForm } from '../utils/form-utils';
+import { generateTimestamp, validateForm } from '../utils/form-utils';
 import { Category, TransactionForm } from '../types/transactions-types';
 import { FormError } from '../types/errors-types';
 import { addTransaction } from '../db/repository/transaction-repository';
@@ -36,7 +36,7 @@ export default function IncomeForm({ navigation }: IncomeFormProps) {
     if (validateForm(formData, setErrors)) {
       if (!category) return;
       const expAmt = parseFloat(amount);
-      const expDate = new Date(date);
+      const expDate = generateTimestamp(date);
       addTransaction({
         ...formData,
         id: '',

@@ -9,6 +9,7 @@ export type Category = {
 };
 
 export type Transaction = {
+  id: string;
   type: TransactionType;
   amount: number;
   category: Category;

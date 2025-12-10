@@ -39,6 +39,7 @@ export default function IncomeForm({ navigation }: IncomeFormProps) {
       const expDate = new Date(date);
       addTransaction({
         ...formData,
+        id: '',
         amount: expAmt,
         category: category,
         date: expDate,

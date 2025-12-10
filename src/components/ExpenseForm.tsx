@@ -39,6 +39,7 @@ export default function ExpenseForm({ navigation }: ExpenseFormProps) {
       const expDate = new Date(date);
       addTransaction({
         ...formData,
+        id: '',
         amount: expAmt,
         category: category,
         date: expDate,

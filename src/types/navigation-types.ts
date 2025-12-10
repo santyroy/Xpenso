@@ -1,4 +1,9 @@
-import { NavigatorScreenParams } from '@react-navigation/native';
+import {
+  CompositeNavigationProp,
+  NavigatorScreenParams,
+} from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
 export type RootParamList = {
   Auth: NavigatorScreenParams<AuthParamList>;
@@ -27,3 +32,16 @@ export type AppStackParamList = {
   AddBudget: undefined;
   Transactions: undefined;
 };
+
+// 1. The primary navigator for the Home Screen
+type HomeTabNavigationProp = BottomTabNavigationProp<AppTabParamList, 'Home'>;
+
+// 2. The *stack* navigator that Home is part of (via AppTabs -> App)
+// This is usually the stack that wraps the tabs, which for you is AppParamList
+type AppNavigationProp = NativeStackNavigationProp<AppParamList>;
+
+// 3. Combine them to get the full navigation capabilities of a screen in the tab navigator
+export type HomeCompositeNavigationProp = CompositeNavigationProp<
+  HomeTabNavigationProp,
+  AppNavigationProp
+>;

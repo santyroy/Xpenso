@@ -1,4 +1,4 @@
-import { Category } from '../types/transactions-types';
+import { Category, TransactionType } from '../types/transactions-types';
 
 export const expenseCategories: Category[] = [
   { id: 1, name: 'bill', iconName: 'money-bills' },
@@ -17,3 +17,8 @@ export const incomeCategories: Category[] = [
   { id: 3, name: 'freelance', iconName: 'house-laptop' },
   { id: 4, name: 'others', iconName: 'credit-card' },
 ];
+
+export const extractCategory = (type: TransactionType, name: string) => {
+  const data = type === 'expense' ? expenseCategories : incomeCategories;
+  return data.find(item => item.name === name);
+};

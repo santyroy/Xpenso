@@ -8,7 +8,7 @@ export const expenseCategories: Category[] = [
   { id: 5, name: 'transport', iconName: 'car', color: '#57B6FF' },
   { id: 6, name: 'grocery', iconName: 'shop', color: '#FF7F50' },
   { id: 7, name: 'shopping', iconName: 'cart-shopping', color: '#FF477F' },
-  { id: 8, name: 'others', iconName: 'credit-card', color: '#9DD9D2' },
+  { id: 8, name: 'others', iconName: 'credit-card', color: '#CCCCCC' },
 ];
 
 export const incomeCategories: Category[] = [

@@ -39,7 +39,7 @@ export default function IncomeForm({
   const [note, setNote] = useState(transactionToEdit?.note ?? '');
   const [errors, setErrors] = useState<FormError>({});
 
-  const handleAddIncome = () => {
+  const handleAddIncome = async () => {
     const formData: TransactionForm = {
       type: 'income',
       amount,
@@ -51,7 +51,7 @@ export default function IncomeForm({
       if (!category) return;
       const expAmt = parseFloat(amount);
       const expDate = generateTimestamp(date);
-      addTransaction({
+      await addTransaction({
         ...formData,
         id: '',
         amount: expAmt,
@@ -70,7 +70,7 @@ export default function IncomeForm({
     }
   };
 
-  const handleUdpateIncome = () => {
+  const handleUdpateIncome = async () => {
     const formData: TransactionForm = {
       type: 'income',
       amount,
@@ -84,7 +84,7 @@ export default function IncomeForm({
       const expDate = generateTimestamp(date);
 
       if (!transactionToEdit?.id) return;
-      updateTransactionById(transactionToEdit?.id, {
+      await updateTransactionById(transactionToEdit?.id, {
         ...formData,
         id: '',
         amount: expAmt,

@@ -39,7 +39,7 @@ export default function ExpenseForm({
   const [note, setNote] = useState(transactionToEdit?.note ?? '');
   const [errors, setErrors] = useState<FormError>({});
 
-  const handleAddExpense = () => {
+  const handleAddExpense = async () => {
     const formData: TransactionForm = {
       type: 'expense',
       amount,
@@ -51,7 +51,7 @@ export default function ExpenseForm({
       if (!category) return;
       const expAmt = parseFloat(amount);
       const expDate = generateTimestamp(date);
-      addTransaction({
+      await addTransaction({
         ...formData,
         id: '',
         amount: expAmt,
@@ -70,7 +70,7 @@ export default function ExpenseForm({
     }
   };
 
-  const handleUpdateExpense = () => {
+  const handleUpdateExpense = async () => {
     const formData: TransactionForm = {
       type: 'expense',
       amount,
@@ -84,7 +84,7 @@ export default function ExpenseForm({
       const expDate = generateTimestamp(date);
 
       if (!transactionToEdit?.id) return;
-      updateTransactionById(transactionToEdit?.id, {
+      await updateTransactionById(transactionToEdit?.id, {
         ...formData,
         id: '',
         amount: expAmt,

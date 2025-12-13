@@ -17,7 +17,9 @@ export type AuthParamList = {
 
 export type AppParamList = {
   AppTabs: NavigatorScreenParams<AppTabParamList>;
-  AppStacks: NavigatorScreenParams<AppStackParamList>;
+  AddTransaction: { transaction: SerializableTransaction } | undefined;
+  AddBudget: undefined;
+  Transactions: undefined;
 };
 
 export type AppTabParamList = {
@@ -26,12 +28,6 @@ export type AppTabParamList = {
   Budget: undefined;
   Profile: undefined;
   AddTransactionButton: undefined;
-};
-
-export type AppStackParamList = {
-  AddTransaction: { transaction: SerializableTransaction } | undefined;
-  AddBudget: undefined;
-  Transactions: undefined;
 };
 
 // 1. The primary navigator for the Home Screen
@@ -47,22 +43,12 @@ export type HomeCompositeNavigationProp = CompositeNavigationProp<
   AppNavigationProp
 >;
 
-type TransactionsStackNavigationProp = NativeStackNavigationProp<
-  AppStackParamList,
+export type TransactionsScreenNavigationProp = NativeStackNavigationProp<
+  AppParamList,
   'Transactions'
 >;
 
-export type TransactionsCompositeNavigationProp = CompositeNavigationProp<
-  TransactionsStackNavigationProp,
-  AppNavigationProp
->;
-
-type AddTransactionStackNavigationProp = NativeStackNavigationProp<
-  AppStackParamList,
+export type AddTransactionScreenNavigationProp = NativeStackNavigationProp<
+  AppParamList,
   'AddTransaction'
->;
-
-export type AddTransactionCompositeNavigationProp = CompositeNavigationProp<
-  AddTransactionStackNavigationProp,
-  AppNavigationProp
 >;

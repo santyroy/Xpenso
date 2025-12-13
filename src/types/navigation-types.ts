@@ -4,6 +4,7 @@ import {
 } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { SerializableTransaction } from './transactions-types';
 
 export type RootParamList = {
   Auth: NavigatorScreenParams<AuthParamList>;
@@ -28,7 +29,7 @@ export type AppTabParamList = {
 };
 
 export type AppStackParamList = {
-  AddTransaction: undefined;
+  AddTransaction: { transaction: SerializableTransaction } | undefined;
   AddBudget: undefined;
   Transactions: undefined;
 };
@@ -43,5 +44,25 @@ type AppNavigationProp = NativeStackNavigationProp<AppParamList>;
 // 3. Combine them to get the full navigation capabilities of a screen in the tab navigator
 export type HomeCompositeNavigationProp = CompositeNavigationProp<
   HomeTabNavigationProp,
+  AppNavigationProp
+>;
+
+type TransactionsStackNavigationProp = NativeStackNavigationProp<
+  AppStackParamList,
+  'Transactions'
+>;
+
+export type TransactionsCompositeNavigationProp = CompositeNavigationProp<
+  TransactionsStackNavigationProp,
+  AppNavigationProp
+>;
+
+type AddTransactionStackNavigationProp = NativeStackNavigationProp<
+  AppStackParamList,
+  'AddTransaction'
+>;
+
+export type AddTransactionCompositeNavigationProp = CompositeNavigationProp<
+  AddTransactionStackNavigationProp,
   AppNavigationProp
 >;

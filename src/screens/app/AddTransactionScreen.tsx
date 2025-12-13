@@ -12,17 +12,14 @@ import TransactionTypeToggleButtons from '../../components/TransactionTypeToogle
 import ExpenseForm from '../../components/ExpenseForm';
 import IncomeForm from '../../components/IncomeForm';
 import {
-  AppStackParamList,
-  AddTransactionCompositeNavigationProp,
+  AppParamList,
+  AddTransactionScreenNavigationProp,
 } from '../../types/navigation-types';
 
-type AddTransactionScreenRouteProp = RouteProp<
-  AppStackParamList,
-  'AddTransaction'
->;
+type AddTransactionScreenRouteProp = RouteProp<AppParamList, 'AddTransaction'>;
 
 type Props = {
-  navigation: AddTransactionCompositeNavigationProp;
+  navigation: AddTransactionScreenNavigationProp;
   route: AddTransactionScreenRouteProp;
 };
 

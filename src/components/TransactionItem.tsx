@@ -2,7 +2,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 import { Transaction } from '../types/transactions-types';
-import { TransactionsCompositeNavigationProp } from '../types/navigation-types';
+import { TransactionsScreenNavigationProp } from '../types/navigation-types';
 import { useAppTheme } from '../hooks/useAppTheme';
 import { capitalize } from '../utils/text-utils';
 
@@ -18,7 +18,7 @@ export default function TransactionItem({ item }: Props) {
     type,
     note,
   } = item;
-  const navigation = useNavigation<TransactionsCompositeNavigationProp>();
+  const navigation = useNavigation<TransactionsScreenNavigationProp>();
   const { colors } = useAppTheme();
 
   const amountText = type === 'expense' ? `- ${amount}` : `+ ${amount}`;
@@ -28,9 +28,8 @@ export default function TransactionItem({ item }: Props) {
     note && note?.length > 10 ? note?.substring(0, 10) + '...' : note;
 
   const navigateToTransactionForm = () => {
-    navigation.navigate('AppStacks', {
-      screen: 'AddTransaction',
-      params: { transaction: { ...item, date: date.toISOString() } },
+    navigation.navigate('AddTransaction', {
+      transaction: { ...item, date: date.toISOString() },
     });
   };
 

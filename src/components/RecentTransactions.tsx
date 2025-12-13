@@ -13,7 +13,7 @@ export default function RecentTransactions({}: Props) {
   const { transactions } = useTransactions(5);
 
   const navigativeToTransactions = () => {
-    navigation.navigate('AppStacks', { screen: 'Transactions' });
+    navigation.navigate('Transactions');
   };
 
   return (

@@ -4,14 +4,14 @@ import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { AppParamList } from '../types/navigation-types';
 
-type NavigationProp = NativeStackNavigationProp<AppParamList, 'AppStacks'>;
+type NavigationProp = NativeStackNavigationProp<AppParamList>;
 
 export default function NewTransactionButton() {
   const { colors } = useTheme();
   const navigation = useNavigation<NavigationProp>();
 
   const handleAddTransaction = () => {
-    navigation.navigate('AppStacks', { screen: 'AddTransaction' });
+    navigation.navigate('AddTransaction');
   };
 
   return (

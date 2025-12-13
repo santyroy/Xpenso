@@ -11,10 +11,10 @@ import { generateTimestamp, validateForm } from '../utils/form-utils';
 import { Category, TransactionForm } from '../types/transactions-types';
 import { FormError } from '../types/errors-types';
 import { addTransaction } from '../db/repository/transaction-repository';
-import { AddTransactionCompositeNavigationProp } from '../types/navigation-types';
+import { AddTransactionScreenNavigationProp } from '../types/navigation-types';
 
 type IncomeFormProps = {
-  navigation: AddTransactionCompositeNavigationProp;
+  navigation: AddTransactionScreenNavigationProp;
 };
 
 export default function IncomeForm({ navigation }: IncomeFormProps) {

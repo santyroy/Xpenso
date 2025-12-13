@@ -8,7 +8,7 @@ const transactionsCollection = database.get('transactions');
 // Add transaction
 export async function addTransaction(formData: Transaction) {
   const newTransaction = await database.write(async () => {
-    const row = transactionsCollection.create(transaction => {
+    const row = await transactionsCollection.create(transaction => {
       const mutable = transaction as TransactionModel;
       mutable.type = formData.type;
       mutable.amount = formData.amount;

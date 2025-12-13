@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Label from './Label';
 import Input from './Input';
 import Button from './Button';
@@ -12,10 +11,10 @@ import { generateTimestamp, validateForm } from '../utils/form-utils';
 import { Category, TransactionForm } from '../types/transactions-types';
 import { FormError } from '../types/errors-types';
 import { addTransaction } from '../db/repository/transaction-repository';
-import { AppParamList } from '../types/navigation-types';
+import { AddTransactionCompositeNavigationProp } from '../types/navigation-types';
 
 type IncomeFormProps = {
-  navigation: NativeStackNavigationProp<AppParamList>;
+  navigation: AddTransactionCompositeNavigationProp;
 };
 
 export default function IncomeForm({ navigation }: IncomeFormProps) {

@@ -25,3 +25,13 @@ export type TransactionForm = {
   date: string;
   note?: string;
 };
+
+// Used for API, Storage, and NAVIGATION PARAMS
+export type SerializableTransaction = {
+  id: string;
+  type: TransactionType;
+  amount: number;
+  category: Category;
+  date: string; // ISO date string
+  note?: string;
+};

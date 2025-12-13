@@ -49,6 +49,25 @@ export async function getTransactionsByDateRange(start: Date, end: Date) {
     .fetch();
 }
 
+// Update transaction by id
+export async function updateTransactionById(
+  id: string,
+  transaction: Transaction,
+) {
+  const currTransaction = await transactionsCollection.find(id);
+  const updatedTransaction = await database.write(async () => {
+    const row = await currTransaction.update(t => {
+      const mutable = t as TransactionModel;
+      mutable.amount = transaction.amount;
+      mutable.category = transaction.category.name;
+      mutable.date = transaction.date;
+      mutable.note = transaction.note ?? '';
+    });
+    return row;
+  });
+  return updatedTransaction;
+}
+
 // Delete transaction by id
 export async function deleteTransactionById(id: string) {
   const transaction = await transactionsCollection.find(id);

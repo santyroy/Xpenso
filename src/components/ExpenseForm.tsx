@@ -7,7 +7,11 @@ import CalendarButton from './CalendarButton';
 import CategoryList from './CategoryList';
 import Error from './Error';
 import { expenseCategories } from '../utils/categories';
-import { Category, TransactionForm } from '../types/transactions-types';
+import {
+  Category,
+  SerializableTransaction,
+  TransactionForm,
+} from '../types/transactions-types';
 import { FormError } from '../types/errors-types';
 import { addTransaction } from '../db/repository/transaction-repository';
 import { generateTimestamp, validateForm } from '../utils/form-utils';
@@ -15,13 +19,21 @@ import { AddTransactionScreenNavigationProp } from '../types/navigation-types';
 
 type ExpenseFormProps = {
   navigation: AddTransactionScreenNavigationProp;
+  transactionToEdit: SerializableTransaction | undefined;
 };
 
-export default function ExpenseForm({ navigation }: ExpenseFormProps) {
-  const [amount, setAmount] = useState('');
-  const [category, setCategory] = useState<Category>();
-  const [date, setDate] = useState('');
-  const [note, setNote] = useState('');
+export default function ExpenseForm({
+  navigation,
+  transactionToEdit,
+}: ExpenseFormProps) {
+  const [amount, setAmount] = useState(
+    transactionToEdit?.amount.toString() ?? '',
+  );
+  const [category, setCategory] = useState<Category | undefined>(
+    transactionToEdit?.category,
+  );
+  const [date, setDate] = useState(transactionToEdit?.date ?? '');
+  const [note, setNote] = useState(transactionToEdit?.note ?? '');
   const [errors, setErrors] = useState<FormError>({});
 
   const handleAddExpense = () => {

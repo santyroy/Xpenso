@@ -24,11 +24,10 @@ type Props = {
 };
 
 export default function AddTransactionScreen({ route, navigation }: Props) {
-  const [transactionType, setTransactionType] =
-    useState<TransactionType>('expense');
-
   const transactionToEdit = route.params?.transaction;
-  console.log(transactionToEdit);
+  const [transactionType, setTransactionType] = useState<TransactionType>(
+    transactionToEdit?.type || 'expense',
+  );
 
   return (
     <KeyboardAvoidingView
@@ -48,9 +47,15 @@ export default function AddTransactionScreen({ route, navigation }: Props) {
         contentContainerStyle={styles.scrollViewContent}
       >
         {transactionType === 'expense' ? (
-          <ExpenseForm navigation={navigation} />
+          <ExpenseForm
+            navigation={navigation}
+            transactionToEdit={transactionToEdit}
+          />
         ) : (
-          <IncomeForm navigation={navigation} />
+          <IncomeForm
+            navigation={navigation}
+            transactionToEdit={transactionToEdit}
+          />
         )}
       </ScrollView>
     </KeyboardAvoidingView>

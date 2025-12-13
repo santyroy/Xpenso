@@ -8,20 +8,32 @@ import CategoryList from './CategoryList';
 import Error from './Error';
 import { incomeCategories } from '../utils/categories';
 import { generateTimestamp, validateForm } from '../utils/form-utils';
-import { Category, TransactionForm } from '../types/transactions-types';
+import {
+  Category,
+  SerializableTransaction,
+  TransactionForm,
+} from '../types/transactions-types';
 import { FormError } from '../types/errors-types';
 import { addTransaction } from '../db/repository/transaction-repository';
 import { AddTransactionScreenNavigationProp } from '../types/navigation-types';
 
 type IncomeFormProps = {
   navigation: AddTransactionScreenNavigationProp;
+  transactionToEdit: SerializableTransaction | undefined;
 };
 
-export default function IncomeForm({ navigation }: IncomeFormProps) {
-  const [amount, setAmount] = useState('');
-  const [category, setCategory] = useState<Category>();
-  const [date, setDate] = useState('');
-  const [note, setNote] = useState('');
+export default function IncomeForm({
+  navigation,
+  transactionToEdit,
+}: IncomeFormProps) {
+  const [amount, setAmount] = useState(
+    transactionToEdit?.amount.toString() ?? '',
+  );
+  const [category, setCategory] = useState<Category | undefined>(
+    transactionToEdit?.category,
+  );
+  const [date, setDate] = useState(transactionToEdit?.date ?? '');
+  const [note, setNote] = useState(transactionToEdit?.note ?? '');
   const [errors, setErrors] = useState<FormError>({});
 
   const handleAddIncome = () => {

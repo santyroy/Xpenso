@@ -6,24 +6,32 @@ import {
   ScrollView,
   Platform,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RouteProp } from '@react-navigation/native';
 import { TransactionType } from '../../types/transactions-types';
 import TransactionTypeToggleButtons from '../../components/TransactionTypeToogleButtons';
 import ExpenseForm from '../../components/ExpenseForm';
 import IncomeForm from '../../components/IncomeForm';
-import { AppParamList } from '../../types/navigation-types';
+import {
+  AppStackParamList,
+  AddTransactionCompositeNavigationProp,
+} from '../../types/navigation-types';
 
-type AddTransactionScreenNavigationProp = NativeStackNavigationProp<
-  AppParamList,
-  'AppStacks'
+type AddTransactionScreenRouteProp = RouteProp<
+  AppStackParamList,
+  'AddTransaction'
 >;
 
-export default function AddTransactionScreen() {
+type Props = {
+  navigation: AddTransactionCompositeNavigationProp;
+  route: AddTransactionScreenRouteProp;
+};
+
+export default function AddTransactionScreen({ route, navigation }: Props) {
   const [transactionType, setTransactionType] =
     useState<TransactionType>('expense');
 
-  const navigation = useNavigation<AddTransactionScreenNavigationProp>();
+  const transactionToEdit = route.params?.transaction;
+  console.log(transactionToEdit);
 
   return (
     <KeyboardAvoidingView

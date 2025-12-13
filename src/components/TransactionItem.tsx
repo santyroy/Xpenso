@@ -29,7 +29,7 @@ export default function TransactionItem({ item }: Props) {
 
   const navigateToTransactionForm = () => {
     navigation.navigate('AddTransaction', {
-      transaction: { ...item, date: date.toISOString() },
+      transaction: { ...item, date: date.toDateString() },
     });
   };
 

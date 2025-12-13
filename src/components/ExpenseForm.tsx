@@ -13,7 +13,10 @@ import {
   TransactionForm,
 } from '../types/transactions-types';
 import { FormError } from '../types/errors-types';
-import { addTransaction } from '../db/repository/transaction-repository';
+import {
+  addTransaction,
+  updateTransactionById,
+} from '../db/repository/transaction-repository';
 import { generateTimestamp, validateForm } from '../utils/form-utils';
 import { AddTransactionScreenNavigationProp } from '../types/navigation-types';
 
@@ -49,6 +52,39 @@ export default function ExpenseForm({
       const expAmt = parseFloat(amount);
       const expDate = generateTimestamp(date);
       addTransaction({
+        ...formData,
+        id: '',
+        amount: expAmt,
+        category: category,
+        date: expDate,
+      });
+
+      // reset form
+      setAmount('');
+      setCategory(undefined);
+      setDate('');
+      setNote('');
+
+      // navigate to home screen
+      navigation.replace('AppTabs', { screen: 'Home' });
+    }
+  };
+
+  const handleUpdateExpense = () => {
+    const formData: TransactionForm = {
+      type: 'expense',
+      amount,
+      category,
+      date,
+      note,
+    };
+    if (validateForm(formData, setErrors)) {
+      if (!category) return;
+      const expAmt = parseFloat(amount);
+      const expDate = generateTimestamp(date);
+
+      if (!transactionToEdit?.id) return;
+      updateTransactionById(transactionToEdit?.id, {
         ...formData,
         id: '',
         amount: expAmt,
@@ -114,9 +150,9 @@ export default function ExpenseForm({
       </View>
       <View>
         <Button
-          text="Add Expense"
+          text={transactionToEdit ? 'Update Expense' : 'Add Expense'}
           variant="primary"
-          onPress={handleAddExpense}
+          onPress={transactionToEdit ? handleUpdateExpense : handleAddExpense}
         />
       </View>
     </View>

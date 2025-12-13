@@ -14,7 +14,10 @@ import {
   TransactionForm,
 } from '../types/transactions-types';
 import { FormError } from '../types/errors-types';
-import { addTransaction } from '../db/repository/transaction-repository';
+import {
+  addTransaction,
+  updateTransactionById,
+} from '../db/repository/transaction-repository';
 import { AddTransactionScreenNavigationProp } from '../types/navigation-types';
 
 type IncomeFormProps = {
@@ -49,6 +52,39 @@ export default function IncomeForm({
       const expAmt = parseFloat(amount);
       const expDate = generateTimestamp(date);
       addTransaction({
+        ...formData,
+        id: '',
+        amount: expAmt,
+        category: category,
+        date: expDate,
+      });
+
+      // reset form
+      setAmount('');
+      setCategory(undefined);
+      setDate('');
+      setNote('');
+
+      // navigate to home screen
+      navigation.replace('AppTabs', { screen: 'Home' });
+    }
+  };
+
+  const handleUdpateIncome = () => {
+    const formData: TransactionForm = {
+      type: 'income',
+      amount,
+      category,
+      date,
+      note,
+    };
+    if (validateForm(formData, setErrors)) {
+      if (!category) return;
+      const expAmt = parseFloat(amount);
+      const expDate = generateTimestamp(date);
+
+      if (!transactionToEdit?.id) return;
+      updateTransactionById(transactionToEdit?.id, {
         ...formData,
         id: '',
         amount: expAmt,
@@ -113,7 +149,11 @@ export default function IncomeForm({
         />
       </View>
       <View>
-        <Button text="Add Income" variant="primary" onPress={handleAddIncome} />
+        <Button
+          text={transactionToEdit ? 'Update Income' : 'Add Income'}
+          variant="primary"
+          onPress={transactionToEdit ? handleUdpateIncome : handleAddIncome}
+        />
       </View>
     </View>
   );

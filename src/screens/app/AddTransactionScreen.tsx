@@ -1,20 +1,23 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   StyleSheet,
   View,
   KeyboardAvoidingView,
   ScrollView,
   Platform,
+  Alert,
 } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { TransactionType } from '../../types/transactions-types';
 import TransactionTypeToggleButtons from '../../components/TransactionTypeToogleButtons';
 import ExpenseForm from '../../components/ExpenseForm';
 import IncomeForm from '../../components/IncomeForm';
+import DeleteButton from '../../components/DeleteButton';
 import {
   AppParamList,
   AddTransactionScreenNavigationProp,
 } from '../../types/navigation-types';
+import { deleteTransactionById } from '../../db/repository/transaction-repository';
 
 type AddTransactionScreenRouteProp = RouteProp<AppParamList, 'AddTransaction'>;
 
@@ -28,6 +31,30 @@ export default function AddTransactionScreen({ route, navigation }: Props) {
   const [transactionType, setTransactionType] = useState<TransactionType>(
     transactionToEdit?.type || 'expense',
   );
+
+  const handleDelete = useCallback(() => {
+    if (!transactionToEdit) return;
+
+    Alert.alert('Delete', 'Are you sure?', [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'Delete',
+        style: 'destructive',
+        onPress: async () => {
+          await deleteTransactionById(transactionToEdit.id);
+          navigation.goBack();
+        },
+      },
+    ]);
+  }, [transactionToEdit, navigation]);
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: transactionToEdit
+        ? () => <DeleteButton onPress={handleDelete} />
+        : undefined,
+    });
+  }, [navigation, transactionToEdit, handleDelete]);
 
   return (
     <KeyboardAvoidingView

@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { Model } from '@nozbe/watermelondb';
 import {
   getAllTransactions,
@@ -30,30 +31,32 @@ export const useTransactions = (limit?: number) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    const fetchTransactions = async () => {
-      setIsLoading(true);
-      setError('');
+  useFocusEffect(
+    useCallback(() => {
+      const fetchTransactions = async () => {
+        setIsLoading(true);
+        setError('');
 
-      try {
-        let rows;
-        if (limit && limit > 0) {
-          rows = await getTransactionsByLimit(limit);
-        } else {
-          rows = await getAllTransactions();
+        try {
+          let rows;
+          if (limit && limit > 0) {
+            rows = await getTransactionsByLimit(limit);
+          } else {
+            rows = await getAllTransactions();
+          }
+          const data = rows.reduce(reducer, [] as Transaction[]);
+          setTransactions(data);
+        } catch (err) {
+          const errorMessage = err instanceof Error ? err.message : String(err);
+          setError('Error: ' + errorMessage);
+        } finally {
+          setIsLoading(false);
         }
-        const data = rows.reduce(reducer, [] as Transaction[]);
-        setTransactions(data);
-      } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : String(err);
-        setError('Error: ' + errorMessage);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+      };
 
-    fetchTransactions();
-  }, [limit]);
+      fetchTransactions();
+    }, [limit]),
+  );
 
   return { transactions, isLoading, error };
 };

@@ -1,5 +1,6 @@
 import { FlatList, StyleSheet } from 'react-native';
 import TransactionItem from './TransactionItem';
+import NoData from './NoData';
 import { Transaction } from '../types/transactions-types';
 
 type Props = {
@@ -13,10 +14,16 @@ export default function TransactionList({ transactions }: Props) {
       renderItem={({ item }) => <TransactionItem item={item} />}
       keyExtractor={item => item.id}
       contentContainerStyle={styles.contentStyle}
+      ListEmptyComponent={
+        <NoData
+          title="No Transactions"
+          description="Please add new transactions"
+        />
+      }
     />
   );
 }
 
 const styles = StyleSheet.create({
-  contentStyle: { gap: 20 },
+  contentStyle: { gap: 20, flexGrow: 1 },
 });

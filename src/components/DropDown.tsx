@@ -1,13 +1,17 @@
 import { Picker } from '@react-native-picker/picker';
 import { useAppTheme } from '../hooks/useAppTheme';
 
-type Props = {
+type Props<T extends string | number> = {
   list: string[];
-  state: number | string;
-  setState: (state: number | string) => void;
+  state: T;
+  setState: (state: T) => void;
 };
 
-export default function DropDown({ list, state, setState }: Props) {
+export default function DropDown<T extends string | number>({
+  list,
+  state,
+  setState,
+}: Props<T>) {
   const { colors } = useAppTheme();
   return (
     <Picker

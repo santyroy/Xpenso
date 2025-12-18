@@ -1,16 +1,17 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useAppTheme } from '../hooks/useAppTheme';
-import { useTransactions } from '../hooks/useTransactions';
 import TransactionList from './TransactionList';
 import { HomeCompositeNavigationProp } from '../types/navigation-types';
+import { Transaction } from '../types/transactions-types';
 
-type Props = {};
+type Props = {
+  transactions: Transaction[];
+};
 
-export default function RecentTransactions({}: Props) {
+export default function RecentTransactions({ transactions }: Props) {
   const { colors } = useAppTheme();
   const navigation = useNavigation<HomeCompositeNavigationProp>();
-  const { transactions } = useTransactions({ limit: 5 });
 
   const navigativeToTransactions = () => {
     navigation.navigate('Transactions');

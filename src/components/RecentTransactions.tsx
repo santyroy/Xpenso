@@ -10,7 +10,7 @@ type Props = {};
 export default function RecentTransactions({}: Props) {
   const { colors } = useAppTheme();
   const navigation = useNavigation<HomeCompositeNavigationProp>();
-  const { transactions } = useTransactions(5);
+  const { transactions } = useTransactions({ limit: 5 });
 
   const navigativeToTransactions = () => {
     navigation.navigate('Transactions');

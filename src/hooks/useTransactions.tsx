@@ -54,11 +54,6 @@ export const useTransactions = ({
             const startDate = new Date(currentDate.getFullYear(), month, 1);
             const endDate = new Date(currentDate.getFullYear(), month + 1, 0);
             rows = await getTransactionsByDateRange(startDate, endDate);
-            console.log(
-              `No.of transactions: from ${startDate.getTime()} to ${endDate.getTime()} = ${
-                rows.length
-              }`,
-            );
           }
           const data = rows.reduce(reducer, [] as Transaction[]);
           setTransactions(data);

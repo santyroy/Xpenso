@@ -25,3 +25,8 @@ export const months = [
   'November',
   'December',
 ];
+
+export const getMonthYearString = () =>
+  months[new Date().getMonth()].substring(0, 3) +
+  ' ' +
+  new Date().getFullYear();

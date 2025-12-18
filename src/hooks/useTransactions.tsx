@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { Model } from '@nozbe/watermelondb';
 import {
-  getAllTransactions,
+  getTransactionsByDateRange,
   getTransactionsByLimit,
 } from '../db/repository/transaction-repository';
 import TransactionModel from '../db/models/Transaction';
@@ -26,7 +26,15 @@ const reducer = (acc: Transaction[], t: Model): Transaction[] => {
   return acc;
 };
 
-export const useTransactions = (limit?: number) => {
+type Props = {
+  limit?: number;
+  month?: number;
+};
+
+export const useTransactions = ({
+  limit = 10,
+  month = new Date().getMonth(),
+}: Props = {}) => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -42,7 +50,15 @@ export const useTransactions = (limit?: number) => {
           if (limit && limit > 0) {
             rows = await getTransactionsByLimit(limit);
           } else {
-            rows = await getAllTransactions();
+            const currentDate = new Date();
+            const startDate = new Date(currentDate.getFullYear(), month, 1);
+            const endDate = new Date(currentDate.getFullYear(), month + 1, 0);
+            rows = await getTransactionsByDateRange(startDate, endDate);
+            console.log(
+              `No.of transactions: from ${startDate.getTime()} to ${endDate.getTime()} = ${
+                rows.length
+              }`,
+            );
           }
           const data = rows.reduce(reducer, [] as Transaction[]);
           setTransactions(data);
@@ -55,7 +71,7 @@ export const useTransactions = (limit?: number) => {
       };
 
       fetchTransactions();
-    }, [limit]),
+    }, [limit, month]),
   );
 
   return { transactions, isLoading, error };

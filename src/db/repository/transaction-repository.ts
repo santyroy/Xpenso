@@ -44,7 +44,8 @@ export async function getTransactionsByCategory(category: string) {
 export async function getTransactionsByDateRange(start: Date, end: Date) {
   return await transactionsCollection
     .query(
-      Q.and(Q.where('date', start.getDate()), Q.where('date', end.getDate())),
+      Q.where('date', Q.between(start.getTime(), end.getTime())),
+      Q.sortBy('date', 'desc'),
     )
     .fetch();
 }

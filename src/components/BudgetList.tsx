@@ -1,13 +1,20 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import NoData from './NoData';
+import { Budget } from '../types/budget-types';
+import { useAppTheme } from '../hooks/useAppTheme';
 
-export default function BudgetList() {
+type Props = {
+  budgets: Budget[];
+};
+
+export default function BudgetList({ budgets }: Props) {
+  const { colors } = useAppTheme();
   return (
     <FlatList
-      data={[]}
+      data={budgets}
       renderItem={({ item }) => (
         <View>
-          <Text>Budget</Text>
+          <Text style={{ color: colors.text }}>{item.category.name}</Text>
         </View>
       )}
       contentContainerStyle={styles.contentStyle}

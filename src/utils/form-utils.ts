@@ -1,5 +1,7 @@
-import { FormError } from '../types/errors-types';
+import { BudgetForm } from '../types/budget-types';
+import { BudgetFormError, TransactionFormError } from '../types/errors-types';
 import { TransactionForm } from '../types/transaction-types';
+import { budgetPeriod } from './text-utils';
 
 export function isValidDate(date: string): boolean {
   const dateArr = date.split('/');
@@ -33,13 +35,13 @@ export function generateTimestamp(date: string) {
   return finalTimestamp;
 }
 
-type setErrors = (err: FormError) => void;
+type setErrors = (err: TransactionFormError) => void;
 
 export const validateTransactionForm = (
   formData: TransactionForm,
   setErrors: setErrors,
 ) => {
-  let err: FormError = {};
+  let err: TransactionFormError = {};
   const { amount, category, date } = formData;
 
   if (amount === '') {
@@ -54,6 +56,34 @@ export const validateTransactionForm = (
     err.date = 'Date is required';
   } else if (isNaN(Date.parse(date))) {
     err.date = 'Invalid Date';
+  }
+
+  setErrors(err);
+  return Object.values(err).length === 0;
+};
+
+export const validateBudgetForm = (
+  formData: BudgetForm,
+  setErrors: setErrors,
+) => {
+  let err: BudgetFormError = {};
+  const { amountLimit, category, startDate, period } = formData;
+
+  if (amountLimit === '') {
+    err.amountLimit = 'Amount Limit is required';
+  } else if (isNaN(parseFloat(amountLimit))) {
+    err.amountLimit = 'Invalid Amount';
+  }
+  if (!category) {
+    err.category = 'Category is required';
+  }
+  if (startDate === '') {
+    err.startDate = 'Date is required';
+  } else if (isNaN(Date.parse(startDate))) {
+    err.startDate = 'Invalid Date';
+  }
+  if (period === '' || !budgetPeriod.includes(period)) {
+    err.period = 'Invalid Period';
   }
 
   setErrors(err);

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Label from './Label';
 import Input from './Input';
 import Error from './Error';
@@ -8,20 +9,27 @@ import CalendarButton from './CalendarButton';
 import DropDown from './DropDown';
 import Button from './Button';
 import { budgetPeriod } from '../utils/text-utils';
-import { validateBudgetForm } from '../utils/form-utils';
+import {
+  generateBudgetEndDate,
+  generateTimestamp,
+  validateBudgetForm,
+} from '../utils/form-utils';
 import { expenseCategories } from '../utils/categories';
 import { useAppTheme } from '../hooks/useAppTheme';
-import { BudgetFormData, Category } from '../types/budget-types';
+import { BudgetFormData, Category, Period } from '../types/budget-types';
 import { BudgetFormError } from '../types/errors-types';
+import { AddBudgetScreenNavigationProp } from '../types/navigation-types';
+import { addBudget } from '../db/repository/budget-repository';
 
 export default function BudgetForm() {
   const [amountLimit, setAmountLimit] = useState('');
   const [category, setCategory] = useState<Category | undefined>();
   const [startDate, setStartDate] = useState('');
-  const [period, setPeriod] = useState(budgetPeriod[0]);
+  const [period, setPeriod] = useState<Period>('Daily');
   const [errors, setErrors] = useState<BudgetFormError>({});
 
   const { colors } = useAppTheme();
+  const navigation = useNavigation<AddBudgetScreenNavigationProp>();
 
   const handleAddBudget = async () => {
     const formData: BudgetFormData = {
@@ -32,6 +40,28 @@ export default function BudgetForm() {
       period,
     };
     if (validateBudgetForm(formData, setErrors)) {
+      if (!category) return;
+      const budgetAmt = parseFloat(amountLimit);
+      const budgetStartDate = generateTimestamp(startDate);
+      const budgetEndDate = generateBudgetEndDate(startDate, period);
+
+      await addBudget({
+        id: '',
+        type: 'expense',
+        amountLimit: budgetAmt,
+        category: category,
+        startDate: budgetStartDate,
+        endDate: budgetEndDate,
+      });
+
+      // reset form
+      setAmountLimit('');
+      setCategory(undefined);
+      setStartDate('');
+      setPeriod('Daily');
+
+      // navigate to home screen
+      navigation.navigate('AppTabs', { screen: 'Budget' });
     }
   };
 

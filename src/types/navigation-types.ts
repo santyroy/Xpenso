@@ -52,3 +52,13 @@ export type AddTransactionScreenNavigationProp = NativeStackNavigationProp<
   AppParamList,
   'AddTransaction'
 >;
+
+type BudgetTabNavigationProp = BottomTabNavigationProp<
+  AppTabParamList,
+  'Budget'
+>;
+
+export type BudgetCompositeNavigationProp = CompositeNavigationProp<
+  BudgetTabNavigationProp,
+  AppNavigationProp
+>;

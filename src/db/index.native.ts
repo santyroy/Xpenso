@@ -8,7 +8,7 @@ import Transaction from './models/Transaction';
 const adapter = new SQLiteAdapter({
   schema,
   migrations,
-  // dbName: 'myapp',
+  dbName: 'xpenso',
   jsi: true,
   onSetUpError: error => {
     console.error('DB onSetUpError: ', error);

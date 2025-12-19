@@ -13,5 +13,16 @@ export default appSchema({
         { name: 'note', type: 'string', isOptional: true },
       ],
     }),
+    tableSchema({
+      name: 'budgets',
+      columns: [
+        { name: 'type', type: 'string' },
+        { name: 'amountLimit', type: 'number' },
+        { name: 'category', type: 'string' },
+        { name: 'startDate', type: 'number' },
+        { name: 'endDate', type: 'number' },
+        { name: 'spending', type: 'number' },
+      ],
+    }),
   ],
 });

@@ -16,6 +16,7 @@ export type Budget = {
   category: Category;
   startDate: Date;
   endDate: Date;
+  spending: number;
 };
 
 export type BudgetFormData = {
@@ -34,6 +35,7 @@ export type SerializableBudget = {
   category: Category;
   startDate: string; // ISO date string
   period: Period;
+  spending: number;
 };
 
 export type Period = 'Daily' | 'Weekly' | 'Monthly' | 'Yearly';

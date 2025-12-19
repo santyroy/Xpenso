@@ -3,3 +3,10 @@ export type TransactionFormError = {
   category?: string;
   date?: string;
 };
+
+export type BudgetFormError = {
+  amountLimit?: string;
+  category?: string;
+  startDate?: string;
+  period?: string;
+};

@@ -30,3 +30,5 @@ export const getMonthYearString = () =>
   months[new Date().getMonth()].substring(0, 3) +
   ' ' +
   new Date().getFullYear();
+
+export const budgetPeriod = ['Daily', 'Weekly', 'Monthly', 'Yearly'];

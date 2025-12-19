@@ -14,7 +14,7 @@ import {
 import {
   Category,
   SerializableTransaction,
-  TransactionForm,
+  TransactionFormData,
 } from '../types/transaction-types';
 import { TransactionFormError } from '../types/errors-types';
 import {
@@ -43,7 +43,7 @@ export default function IncomeForm({
   const [errors, setErrors] = useState<TransactionFormError>({});
 
   const handleAddIncome = async () => {
-    const formData: TransactionForm = {
+    const formData: TransactionFormData = {
       type: 'income',
       amount,
       category,
@@ -74,7 +74,7 @@ export default function IncomeForm({
   };
 
   const handleUdpateIncome = async () => {
-    const formData: TransactionForm = {
+    const formData: TransactionFormData = {
       type: 'income',
       amount,
       category,

@@ -10,7 +10,7 @@ import { expenseCategories } from '../utils/categories';
 import {
   Category,
   SerializableTransaction,
-  TransactionForm,
+  TransactionFormData,
 } from '../types/transaction-types';
 import { TransactionFormError } from '../types/errors-types';
 import {
@@ -43,7 +43,7 @@ export default function ExpenseForm({
   const [errors, setErrors] = useState<TransactionFormError>({});
 
   const handleAddExpense = async () => {
-    const formData: TransactionForm = {
+    const formData: TransactionFormData = {
       type: 'expense',
       amount,
       category,
@@ -74,7 +74,7 @@ export default function ExpenseForm({
   };
 
   const handleUpdateExpense = async () => {
-    const formData: TransactionForm = {
+    const formData: TransactionFormData = {
       type: 'expense',
       amount,
       category,

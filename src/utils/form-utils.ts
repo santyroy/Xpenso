@@ -1,6 +1,6 @@
 import { BudgetForm } from '../types/budget-types';
 import { BudgetFormError, TransactionFormError } from '../types/errors-types';
-import { TransactionForm } from '../types/transaction-types';
+import { TransactionFormData } from '../types/transaction-types';
 import { budgetPeriod } from './text-utils';
 
 export function isValidDate(date: string): boolean {
@@ -38,7 +38,7 @@ export function generateTimestamp(date: string) {
 type setErrors = (err: TransactionFormError) => void;
 
 export const validateTransactionForm = (
-  formData: TransactionForm,
+  formData: TransactionFormData,
   setErrors: setErrors,
 ) => {
   let err: TransactionFormError = {};

@@ -18,7 +18,7 @@ export type Transaction = {
   note?: string;
 };
 
-export type TransactionForm = {
+export type TransactionFormData = {
   type: TransactionType;
   amount: string;
   category: Category | undefined;

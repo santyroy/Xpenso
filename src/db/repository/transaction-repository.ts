@@ -1,7 +1,7 @@
 import { Q } from '@nozbe/watermelondb';
 import { database } from '../index.native';
 import { Transaction } from '../../types/transaction-types';
-import TransactionModel from '../models/Transaction';
+import TransactionModel from '../models/TransactionModel';
 
 const transactionsCollection = database.get<TransactionModel>('transactions');
 

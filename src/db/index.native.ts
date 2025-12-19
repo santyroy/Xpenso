@@ -3,8 +3,8 @@ import SQLiteAdapter from '@nozbe/watermelondb/adapters/sqlite';
 
 import schema from './schema';
 import migrations from './migrations';
-import Transaction from './models/Transaction';
-import Budget from './models/Budget';
+import TransactionModel from './models/TransactionModel';
+import BudgetModel from './models/BudgetModel';
 
 const adapter = new SQLiteAdapter({
   schema,
@@ -18,5 +18,5 @@ const adapter = new SQLiteAdapter({
 
 export const database = new Database({
   adapter,
-  modelClasses: [Transaction, Budget],
+  modelClasses: [TransactionModel, BudgetModel],
 });

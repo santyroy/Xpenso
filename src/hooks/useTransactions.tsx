@@ -1,16 +1,15 @@
 import { useCallback, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
-import { Model } from '@nozbe/watermelondb';
 import {
   getTransactionsByDateRange,
   getTransactionsByLimit,
 } from '../db/repository/transaction-repository';
-import TransactionModel from '../db/models/Transaction';
+import TransactionModel from '../db/models/TransactionModel';
 import { extractCategory } from '../utils/categories';
 import { Transaction, TransactionType } from '../types/transaction-types';
 
-const reducer = (acc: Transaction[], t: Model): Transaction[] => {
-  const { id, type, amount, category, date, note } = t as TransactionModel;
+const reducer = (acc: Transaction[], curr: TransactionModel): Transaction[] => {
+  const { id, type, amount, category, date, note } = curr;
   const transactionType = type as TransactionType;
   const categoryObj = extractCategory(transactionType, category);
   if (categoryObj) {

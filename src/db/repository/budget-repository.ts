@@ -1,6 +1,6 @@
 import { Budget } from '../../types/budget-types';
 import { database } from '../index.native';
-import BudgetModel from '../models/Budget';
+import BudgetModel from '../models/BudgetModel';
 
 const budgetsCollection = database.get<BudgetModel>('budgets');
 

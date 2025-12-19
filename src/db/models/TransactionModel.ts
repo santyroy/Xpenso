@@ -1,7 +1,7 @@
 import { Model } from '@nozbe/watermelondb';
 import { field, text, date } from '@nozbe/watermelondb/decorators';
 
-export default class Transaction extends Model {
+export default class TransactionModel extends Model {
   static table = 'transactions';
 
   @text('type') type!: string;

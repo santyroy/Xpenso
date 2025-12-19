@@ -1,4 +1,4 @@
-export type FormError = {
+export type TransactionFormError = {
   amount?: string;
   category?: string;
   date?: string;

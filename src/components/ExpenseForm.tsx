@@ -12,7 +12,7 @@ import {
   SerializableTransaction,
   TransactionForm,
 } from '../types/transaction-types';
-import { FormError } from '../types/errors-types';
+import { TransactionFormError } from '../types/errors-types';
 import {
   addTransaction,
   updateTransactionById,
@@ -40,7 +40,7 @@ export default function ExpenseForm({
   );
   const [date, setDate] = useState(transactionToEdit?.date ?? '');
   const [note, setNote] = useState(transactionToEdit?.note ?? '');
-  const [errors, setErrors] = useState<FormError>({});
+  const [errors, setErrors] = useState<TransactionFormError>({});
 
   const handleAddExpense = async () => {
     const formData: TransactionForm = {

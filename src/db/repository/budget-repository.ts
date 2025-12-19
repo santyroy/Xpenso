@@ -2,22 +2,27 @@ import { Budget } from '../../types/budget-types';
 import { database } from '../index.native';
 import BudgetModel from '../models/Budget';
 
-const budgetsCollection = database.get('budgets');
+const budgetsCollection = database.get<BudgetModel>('budgets');
 
 // Add Budget
 export async function addBudget(formData: Budget) {
-  const newBudget = await database.write(async () => {
-    const row = await budgetsCollection.create(budget => {
-      const mutable = budget as BudgetModel;
-      mutable.type = formData.type;
-      mutable.amountLimit = formData.amountLimit;
-      mutable.category = formData.category.name;
-      mutable.startDate = formData.startDate;
-      mutable.endDate = formData.endDate;
+  try {
+    const newBudget = await database.write(async () => {
+      const row = await budgetsCollection.create(budget => {
+        budget.type = formData.type;
+        budget.amountLimit = formData.amountLimit;
+        budget.category = formData.category.name;
+        budget.startDate = formData.startDate;
+        budget.endDate = formData.endDate;
+        budget.spending = 0;
+      });
+      return row;
     });
-    return row;
-  });
-  return newBudget;
+    return newBudget;
+  } catch (error) {
+    console.log('Add Budget Error: ', error);
+    throw error;
+  }
 }
 
 // Get All Budgets

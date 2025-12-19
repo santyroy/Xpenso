@@ -1,4 +1,4 @@
-import { BudgetFormData } from '../types/budget-types';
+import { BudgetFormData, Period } from '../types/budget-types';
 import { BudgetFormError, TransactionFormError } from '../types/errors-types';
 import { TransactionFormData } from '../types/transaction-types';
 import { budgetPeriod } from './text-utils';
@@ -33,6 +33,27 @@ export function generateTimestamp(date: string) {
     now.getMilliseconds(),
   );
   return finalTimestamp;
+}
+
+export function generateBudgetEndDate(startDate: string, period: Period) {
+  const endDate = new Date(startDate);
+
+  switch (period) {
+    case 'Daily':
+      endDate.setDate(endDate.getDate() + 1);
+      break;
+    case 'Weekly':
+      endDate.setDate(endDate.getDate() + 7);
+      break;
+    case 'Monthly':
+      endDate.setMonth(endDate.getMonth() + 1);
+      break;
+    case 'Yearly':
+      endDate.setFullYear(endDate.getFullYear() + 1);
+      break;
+  }
+
+  return endDate;
 }
 
 type setErrors = (err: TransactionFormError) => void;
@@ -82,7 +103,7 @@ export const validateBudgetForm = (
   } else if (isNaN(Date.parse(startDate))) {
     err.startDate = 'Invalid Date';
   }
-  if (period === '' || !budgetPeriod.includes(period)) {
+  if (!budgetPeriod.includes(period)) {
     err.period = 'Invalid Period';
   }
 

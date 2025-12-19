@@ -23,7 +23,7 @@ export type BudgetFormData = {
   amountLimit: string;
   category: Category | undefined;
   startDate: string;
-  period: string;
+  period: Period;
 };
 
 // Used for API, Storage, and NAVIGATION PARAMS
@@ -33,5 +33,7 @@ export type SerializableBudget = {
   amount: string;
   category: Category;
   startDate: string; // ISO date string
-  period: string;
+  period: Period;
 };
+
+export type Period = 'Daily' | 'Weekly' | 'Monthly' | 'Yearly';

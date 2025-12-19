@@ -19,8 +19,8 @@ export default function DropDown<T extends string | number>({
       onValueChange={(itemValue, _) => setState(itemValue)}
       mode="dropdown"
     >
-      {list?.map((month, index) => (
-        <Picker.Item label={month} value={index} color={colors.text} />
+      {list?.map(item => (
+        <Picker.Item label={item} value={item} color={colors.text} />
       ))}
     </Picker>
   );

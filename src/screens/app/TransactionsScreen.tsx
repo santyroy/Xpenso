@@ -7,8 +7,13 @@ import DropDown from '../../components/DropDown';
 import { months } from '../../utils/text-utils';
 
 export default function TransactionsScreen() {
-  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
-  const { transactions } = useTransactions({ limit: 0, month: selectedMonth });
+  const [selectedMonth, setSelectedMonth] = useState(
+    months[new Date().getMonth()],
+  );
+  const { transactions } = useTransactions({
+    limit: 0,
+    month: months.indexOf(selectedMonth),
+  });
   const { colors } = useAppTheme();
 
   return (

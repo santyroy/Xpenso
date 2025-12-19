@@ -18,7 +18,7 @@ export type Budget = {
   endDate: Date;
 };
 
-export type BudgetForm = {
+export type BudgetFormData = {
   type: BudgetType;
   amountLimit: string;
   category: Category | undefined;

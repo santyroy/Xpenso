@@ -1,4 +1,4 @@
-import { BudgetForm } from '../types/budget-types';
+import { BudgetFormData } from '../types/budget-types';
 import { BudgetFormError, TransactionFormError } from '../types/errors-types';
 import { TransactionFormData } from '../types/transaction-types';
 import { budgetPeriod } from './text-utils';
@@ -63,7 +63,7 @@ export const validateTransactionForm = (
 };
 
 export const validateBudgetForm = (
-  formData: BudgetForm,
+  formData: BudgetFormData,
   setErrors: setErrors,
 ) => {
   let err: BudgetFormError = {};

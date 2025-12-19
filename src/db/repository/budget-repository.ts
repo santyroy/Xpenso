@@ -27,5 +27,10 @@ export async function addBudget(formData: Budget) {
 
 // Get All Budgets
 export async function getAllBudgets() {
-  return await budgetsCollection.query().fetch();
+  try {
+    return await budgetsCollection.query().fetch();
+  } catch (error) {
+    console.log('Get All Budgets Error: ', error);
+    throw error;
+  }
 }

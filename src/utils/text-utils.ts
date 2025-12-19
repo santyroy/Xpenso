@@ -1,3 +1,5 @@
+import { Period } from '../types/budget-types';
+
 export const capitalize = (text: string) => {
   if (!text || text.length === 0) return;
   return text.substring(0, 1).toUpperCase() + text.substring(1);
@@ -31,4 +33,4 @@ export const getMonthYearString = () =>
   ' ' +
   new Date().getFullYear();
 
-export const budgetPeriod = ['Daily', 'Weekly', 'Monthly', 'Yearly'];
+export const budgetPeriod: Period[] = ['Daily', 'Weekly', 'Monthly', 'Yearly'];

@@ -35,7 +35,7 @@ export function generateTimestamp(date: string) {
 
 type setErrors = (err: FormError) => void;
 
-export const validateForm = (
+export const validateTransactionForm = (
   formData: TransactionForm,
   setErrors: setErrors,
 ) => {

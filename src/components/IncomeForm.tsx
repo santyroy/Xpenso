@@ -7,7 +7,10 @@ import CalendarButton from './CalendarButton';
 import CategoryList from './CategoryList';
 import Error from './Error';
 import { incomeCategories } from '../utils/categories';
-import { generateTimestamp, validateForm } from '../utils/form-utils';
+import {
+  generateTimestamp,
+  validateTransactionForm,
+} from '../utils/form-utils';
 import {
   Category,
   SerializableTransaction,
@@ -47,7 +50,7 @@ export default function IncomeForm({
       date,
       note,
     };
-    if (validateForm(formData, setErrors)) {
+    if (validateTransactionForm(formData, setErrors)) {
       if (!category) return;
       const expAmt = parseFloat(amount);
       const expDate = generateTimestamp(date);
@@ -78,7 +81,7 @@ export default function IncomeForm({
       date,
       note,
     };
-    if (validateForm(formData, setErrors)) {
+    if (validateTransactionForm(formData, setErrors)) {
       if (!category) return;
       const expAmt = parseFloat(amount);
       const expDate = generateTimestamp(date);

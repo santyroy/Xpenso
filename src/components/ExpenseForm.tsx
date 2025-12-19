@@ -17,7 +17,10 @@ import {
   addTransaction,
   updateTransactionById,
 } from '../db/repository/transaction-repository';
-import { generateTimestamp, validateForm } from '../utils/form-utils';
+import {
+  generateTimestamp,
+  validateTransactionForm,
+} from '../utils/form-utils';
 import { AddTransactionScreenNavigationProp } from '../types/navigation-types';
 
 type ExpenseFormProps = {
@@ -47,7 +50,7 @@ export default function ExpenseForm({
       date,
       note,
     };
-    if (validateForm(formData, setErrors)) {
+    if (validateTransactionForm(formData, setErrors)) {
       if (!category) return;
       const expAmt = parseFloat(amount);
       const expDate = generateTimestamp(date);
@@ -78,7 +81,7 @@ export default function ExpenseForm({
       date,
       note,
     };
-    if (validateForm(formData, setErrors)) {
+    if (validateTransactionForm(formData, setErrors)) {
       if (!category) return;
       const expAmt = parseFloat(amount);
       const expDate = generateTimestamp(date);

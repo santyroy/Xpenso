@@ -62,3 +62,8 @@ export type BudgetCompositeNavigationProp = CompositeNavigationProp<
   BudgetTabNavigationProp,
   AppNavigationProp
 >;
+
+export type AddBudgetScreenNavigationProp = NativeStackNavigationProp<
+  AppParamList,
+  'AddBudget'
+>;

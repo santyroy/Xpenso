@@ -1,7 +1,7 @@
 import { FlatList, StyleSheet } from 'react-native';
 import TransactionItem from './TransactionItem';
 import NoData from './NoData';
-import { Transaction } from '../types/transactions-types';
+import { Transaction } from '../types/transaction-types';
 
 type Props = {
   transactions: Transaction[];

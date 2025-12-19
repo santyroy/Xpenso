@@ -1,4 +1,4 @@
-import { Category, TransactionType } from '../types/transactions-types';
+import { Category, TransactionType } from '../types/transaction-types';
 
 export const expenseCategories: Category[] = [
   { id: 1, name: 'bill', iconName: 'money-bills', color: '#FFB84C' },

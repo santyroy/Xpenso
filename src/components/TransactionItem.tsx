@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
-import { Transaction } from '../types/transactions-types';
+import { Transaction } from '../types/transaction-types';
 import { TransactionsScreenNavigationProp } from '../types/navigation-types';
 import { useAppTheme } from '../hooks/useAppTheme';
 import { capitalize } from '../utils/text-utils';

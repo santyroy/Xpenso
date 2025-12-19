@@ -7,7 +7,7 @@ import {
 } from '../db/repository/transaction-repository';
 import TransactionModel from '../db/models/Transaction';
 import { extractCategory } from '../utils/categories';
-import { Transaction, TransactionType } from '../types/transactions-types';
+import { Transaction, TransactionType } from '../types/transaction-types';
 
 const reducer = (acc: Transaction[], t: Model): Transaction[] => {
   const { id, type, amount, category, date, note } = t as TransactionModel;

@@ -4,7 +4,7 @@ import {
 } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { SerializableTransaction } from './transactions-types';
+import { SerializableTransaction } from './transaction-types';
 
 export type RootParamList = {
   Auth: NavigatorScreenParams<AuthParamList>;

@@ -1,4 +1,4 @@
-import { Transaction } from '../types/transactions-types';
+import { Transaction } from '../types/transaction-types';
 
 export const getTransactionSummary = (transactions: Transaction[]) => {
   return transactions.reduce(

@@ -15,7 +15,7 @@ import {
   Category,
   SerializableTransaction,
   TransactionForm,
-} from '../types/transactions-types';
+} from '../types/transaction-types';
 import { FormError } from '../types/errors-types';
 import {
   addTransaction,

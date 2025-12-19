@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useAppTheme } from '../hooks/useAppTheme';
 import TransactionList from './TransactionList';
 import { HomeCompositeNavigationProp } from '../types/navigation-types';
-import { Transaction } from '../types/transactions-types';
+import { Transaction } from '../types/transaction-types';
 
 type Props = {
   transactions: Transaction[];

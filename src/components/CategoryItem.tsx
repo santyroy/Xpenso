@@ -1,5 +1,5 @@
 import { Dimensions, Pressable, StyleSheet, Text } from 'react-native';
-import { Category } from '../types/transactions-types';
+import { Category } from '../types/transaction-types';
 import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 import { useAppTheme } from '../hooks/useAppTheme';
 

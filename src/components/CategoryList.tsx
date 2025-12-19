@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native';
-import { Category } from '../types/transactions-types';
+import { Category } from '../types/transaction-types';
 import CategoryIcon from './CategoryItem';
 
 type Props = {

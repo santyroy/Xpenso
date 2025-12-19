@@ -8,7 +8,7 @@ import {
   Alert,
 } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
-import { TransactionType } from '../../types/transactions-types';
+import { TransactionType } from '../../types/transaction-types';
 import TransactionTypeToggleButtons from '../../components/TransactionTypeToogleButtons';
 import ExpenseForm from '../../components/ExpenseForm';
 import IncomeForm from '../../components/IncomeForm';

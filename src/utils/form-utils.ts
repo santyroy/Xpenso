@@ -1,5 +1,5 @@
 import { FormError } from '../types/errors-types';
-import { TransactionForm } from '../types/transactions-types';
+import { TransactionForm } from '../types/transaction-types';
 
 export function isValidDate(date: string): boolean {
   const dateArr = date.split('/');

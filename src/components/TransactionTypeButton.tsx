@@ -1,6 +1,6 @@
 import { Text, Pressable, StyleSheet } from 'react-native';
 import { useTheme } from '@react-navigation/native';
-import { TransactionType } from '../types/transactions-types';
+import { TransactionType } from '../types/transaction-types';
 
 type Props = {
   transactionType: TransactionType;

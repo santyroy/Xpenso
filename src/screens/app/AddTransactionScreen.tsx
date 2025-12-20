@@ -17,7 +17,7 @@ import {
   AppParamList,
   AddTransactionScreenNavigationProp,
 } from '../../types/navigation-types';
-import { deleteTransactionById } from '../../db/repository/transaction-repository';
+import { deleteTransactionByIdAndUpdateBudget } from '../../db/repository/transaction-repository';
 
 type AddTransactionScreenRouteProp = RouteProp<AppParamList, 'AddTransaction'>;
 
@@ -41,7 +41,7 @@ export default function AddTransactionScreen({ route, navigation }: Props) {
         text: 'Delete',
         style: 'destructive',
         onPress: async () => {
-          await deleteTransactionById(transactionToEdit.id);
+          await deleteTransactionByIdAndUpdateBudget(transactionToEdit.id);
           navigation.goBack();
         },
       },

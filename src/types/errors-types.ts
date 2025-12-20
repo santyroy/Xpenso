@@ -10,3 +10,7 @@ export type BudgetFormError = {
   startDate?: string;
   period?: string;
 };
+
+export type SignupFormError = {
+  name?: string;
+};

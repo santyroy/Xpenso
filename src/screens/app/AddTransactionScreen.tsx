@@ -35,7 +35,7 @@ export default function AddTransactionScreen({ route, navigation }: Props) {
   const handleDelete = useCallback(() => {
     if (!transactionToEdit) return;
 
-    Alert.alert('Delete', 'Are you sure?', [
+    Alert.alert('Delete Transaction', 'Are you sure?', [
       { text: 'Cancel', style: 'cancel' },
       {
         text: 'Delete',

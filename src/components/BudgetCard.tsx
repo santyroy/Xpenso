@@ -1,8 +1,9 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
 import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 import { Budget } from '../types/budget-types';
 import { useAppTheme } from '../hooks/useAppTheme';
 import { capitalize } from '../utils/text-utils';
+import { deleteBudgetById } from '../db/repository/budget-repository';
 
 type Props = {
   budget: Budget;
@@ -10,7 +11,7 @@ type Props = {
 
 export default function BudgetCard({ budget }: Props) {
   const { colors } = useAppTheme();
-  let { category, amountLimit, spending, startDate, endDate } = budget;
+  let { id, category, amountLimit, spending, startDate, endDate } = budget;
   const categoryName = capitalize(category.name);
 
   const percentage = amountLimit > 0 ? (spending / amountLimit) * 100 : 0;
@@ -24,6 +25,19 @@ export default function BudgetCard({ budget }: Props) {
   const amountSpentText = isOverspent ? 'overspent' : 'left';
   const amountSpentTextColor =
     amountSpent < 0 ? colors.notification : colors.text;
+
+  const handleDeleteBudget = () => {
+    Alert.alert('Delete Budget', 'Are you sure?', [
+      { text: 'CANCEL', style: 'cancel' },
+      {
+        text: 'OK',
+        style: 'destructive',
+        onPress: async () => {
+          await deleteBudgetById(id);
+        },
+      },
+    ]);
+  };
 
   return (
     <View style={[styles.container, { backgroundColor: colors.card }]}>
@@ -47,9 +61,9 @@ export default function BudgetCard({ budget }: Props) {
           </Text>
         </View>
         <View>
-          <Pressable hitSlop={20}>
+          <Pressable hitSlop={20} onPress={handleDeleteBudget}>
             <FontAwesome6
-              name="ellipsis-vertical"
+              name="trash-can"
               iconStyle="solid"
               color={colors.text + 70}
               size={20}

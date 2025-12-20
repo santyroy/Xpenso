@@ -8,8 +8,8 @@ export default appSchema({
       columns: [
         { name: 'type', type: 'string' },
         { name: 'amount', type: 'number' },
-        { name: 'category', type: 'string' },
-        { name: 'date', type: 'number' },
+        { name: 'category', type: 'string', isIndexed: true },
+        { name: 'date', type: 'number', isIndexed: true },
         { name: 'note', type: 'string', isOptional: true },
       ],
     }),
@@ -18,9 +18,9 @@ export default appSchema({
       columns: [
         { name: 'type', type: 'string' },
         { name: 'amountLimit', type: 'number' },
-        { name: 'category', type: 'string' },
-        { name: 'startDate', type: 'number' },
-        { name: 'endDate', type: 'number' },
+        { name: 'category', type: 'string', isIndexed: true },
+        { name: 'startDate', type: 'number', isIndexed: true },
+        { name: 'endDate', type: 'number', isIndexed: true },
         { name: 'spending', type: 'number' },
       ],
     }),

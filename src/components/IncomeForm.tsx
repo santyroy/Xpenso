@@ -102,7 +102,7 @@ export default function IncomeForm({
       setNote('');
 
       // navigate to home screen
-      navigation.replace('AppTabs', { screen: 'Home' });
+      navigation.navigate('AppTabs', { screen: 'Home' });
     }
   };
 

@@ -50,6 +50,13 @@ export async function getTransactionsByLimit(limit: number) {
   }
 }
 
+// Fetch limited transactions
+export function getTransactionsSubcriptionByLimit(limit: number) {
+  return transactionsCollection
+    .query(Q.sortBy('date', 'desc'), Q.take(limit))
+    .observe();
+}
+
 // Fetch transactions by category
 export async function getTransactionsByCategory(category: string) {
   try {
@@ -75,6 +82,16 @@ export async function getTransactionsByDateRange(start: Date, end: Date) {
     console.log('Get Transactions By DateRange Error: ', error);
     throw error;
   }
+}
+
+// Fetch transactions by date range
+export function getTransactionsSubcriptionByDateRange(start: Date, end: Date) {
+  return transactionsCollection
+    .query(
+      Q.where('date', Q.between(start.getTime(), end.getTime())),
+      Q.sortBy('date', 'desc'),
+    )
+    .observe();
 }
 
 // Update transaction by id

@@ -30,17 +30,17 @@ export function UserProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const updateName = (newName: string) => {
-    if (!newName.trim()) return;
+    if (!newName) return;
     setName(newName);
-    storage.set(STORAGE_KEYS.USER_NAME, newName.trim());
+    storage.set(STORAGE_KEYS.USER_NAME, newName);
   };
 
   const completeOnboarding = (userName: string) => {
-    if (!userName.trim()) return;
+    if (!userName) return;
 
     setName(userName);
     setHasOnboarded(true);
-    storage.set(STORAGE_KEYS.USER_NAME, userName.trim());
+    storage.set(STORAGE_KEYS.USER_NAME, userName);
     storage.set(STORAGE_KEYS.HAS_ONBOARDED, true);
   };
 

@@ -14,8 +14,8 @@ import {
 } from '../types/transaction-types';
 import { TransactionFormError } from '../types/errors-types';
 import {
-  addTransaction,
-  updateTransactionById,
+  createTransactionAndUpdateBudget,
+  updateTransactionByIdAndUpdateBudget,
 } from '../db/repository/transaction-repository';
 import {
   generateTimestamp,
@@ -54,7 +54,7 @@ export default function ExpenseForm({
       if (!category) return;
       const expAmt = parseFloat(amount);
       const expDate = generateTimestamp(date);
-      await addTransaction({
+      await createTransactionAndUpdateBudget({
         ...formData,
         id: '',
         amount: expAmt,
@@ -87,7 +87,7 @@ export default function ExpenseForm({
       const expDate = generateTimestamp(date);
 
       if (!transactionToEdit?.id) return;
-      await updateTransactionById(transactionToEdit?.id, {
+      await updateTransactionByIdAndUpdateBudget(transactionToEdit?.id, {
         ...formData,
         id: '',
         amount: expAmt,

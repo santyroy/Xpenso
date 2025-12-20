@@ -19,7 +19,7 @@ import { useAppTheme } from '../hooks/useAppTheme';
 import { BudgetFormData, Category, Period } from '../types/budget-types';
 import { BudgetFormError } from '../types/errors-types';
 import { AddBudgetScreenNavigationProp } from '../types/navigation-types';
-import { addBudget } from '../db/repository/budget-repository';
+import { createBudgetAndCalculateExistingSpending } from '../db/repository/budget-repository';
 
 export default function BudgetForm() {
   const [amountLimit, setAmountLimit] = useState('');
@@ -45,13 +45,14 @@ export default function BudgetForm() {
       const budgetStartDate = generateTimestamp(startDate);
       const budgetEndDate = generateBudgetEndDate(startDate, period);
 
-      await addBudget({
+      await createBudgetAndCalculateExistingSpending({
         id: '',
         type: 'expense',
         amountLimit: budgetAmt,
         category: category,
         startDate: budgetStartDate,
         endDate: budgetEndDate,
+        spending: 0,
       });
 
       // reset form

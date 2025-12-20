@@ -10,7 +10,7 @@ type Props = {
 
 export default function BudgetCard({ budget }: Props) {
   const { colors } = useAppTheme();
-  let { category, amountLimit, spending } = budget;
+  let { category, amountLimit, spending, startDate, endDate } = budget;
   const categoryName = capitalize(category.name);
 
   const percentage = amountLimit > 0 ? (spending / amountLimit) * 100 : 0;
@@ -88,6 +88,14 @@ export default function BudgetCard({ budget }: Props) {
           Rs. {absAmountSpent} {amountSpentText}
         </Text>
       </View>
+      <View style={[styles.dateContainer]}>
+        <Text style={[styles.dateText, { color: colors.text }]}>
+          Starts: {startDate.toLocaleDateString('en-GB')}
+        </Text>
+        <Text style={[styles.dateText, { color: colors.text }]}>
+          Ends: {endDate.toLocaleDateString()}
+        </Text>
+      </View>
     </View>
   );
 }
@@ -118,4 +126,6 @@ const styles = StyleSheet.create({
   },
   spendingText: {},
   spendingLeftText: { fontWeight: 600 },
+  dateContainer: { flexDirection: 'row', justifyContent: 'space-between' },
+  dateText: { fontSize: 12 },
 });

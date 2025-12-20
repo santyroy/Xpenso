@@ -1,8 +1,7 @@
-import { useCallback, useState } from 'react';
-import { useFocusEffect } from '@react-navigation/native';
+import { useEffect, useState } from 'react';
 import {
-  getTransactionsByDateRange,
-  getTransactionsByLimit,
+  getTransactionsSubcriptionByDateRange,
+  getTransactionsSubcriptionByLimit,
 } from '../db/repository/transaction-repository';
 import TransactionModel from '../db/models/TransactionModel';
 import { extractCategory } from '../utils/categories';
@@ -38,35 +37,33 @@ export const useTransactions = ({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  useFocusEffect(
-    useCallback(() => {
-      const fetchTransactions = async () => {
-        setIsLoading(true);
-        setError('');
+  useEffect(() => {
+    setIsLoading(true);
+    setError('');
 
-        try {
-          let rows;
-          if (limit && limit > 0) {
-            rows = await getTransactionsByLimit(limit);
-          } else {
-            const currentDate = new Date();
-            const startDate = new Date(currentDate.getFullYear(), month, 1);
-            const endDate = new Date(currentDate.getFullYear(), month + 1, 0);
-            rows = await getTransactionsByDateRange(startDate, endDate);
-          }
-          const data = rows.reduce(reducer, [] as Transaction[]);
-          setTransactions(data);
-        } catch (err) {
-          const errorMessage = err instanceof Error ? err.message : String(err);
-          setError('Error: ' + errorMessage);
-        } finally {
-          setIsLoading(false);
-        }
-      };
+    const observable =
+      limit && limit > 0
+        ? getTransactionsSubcriptionByLimit(limit)
+        : getTransactionsSubcriptionByDateRange(
+            new Date(new Date().getFullYear(), month, 1),
+            new Date(new Date().getFullYear(), month + 1, 0),
+          );
 
-      fetchTransactions();
-    }, [limit, month]),
-  );
+    const subscription = observable.subscribe({
+      next: rows => {
+        const data = rows.reduce(reducer, [] as Transaction[]);
+        setTransactions(data);
+        setIsLoading(false); // Data arrived!
+      },
+      error: err => {
+        const errorMessage = err instanceof Error ? err.message : String(err);
+        setError('Error: ' + errorMessage);
+        setIsLoading(false);
+      },
+    });
+
+    return () => subscription.unsubscribe();
+  }, [limit, month]);
 
   return { transactions, isLoading, error };
 };

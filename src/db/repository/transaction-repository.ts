@@ -4,7 +4,8 @@ import { Transaction } from '../../types/transaction-types';
 import TransactionModel from '../models/TransactionModel';
 import { budgetsCollection } from './budget-repository';
 
-const transactionsCollection = database.get<TransactionModel>('transactions');
+export const transactionsCollection =
+  database.get<TransactionModel>('transactions');
 
 // Add transaction
 export async function addTransaction(formData: Transaction) {

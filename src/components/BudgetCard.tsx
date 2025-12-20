@@ -93,7 +93,7 @@ export default function BudgetCard({ budget }: Props) {
           Starts: {startDate.toLocaleDateString('en-GB')}
         </Text>
         <Text style={[styles.dateText, { color: colors.text }]}>
-          Ends: {endDate.toLocaleDateString()}
+          Ends: {endDate.toLocaleDateString('en-GB')}
         </Text>
       </View>
     </View>

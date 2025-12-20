@@ -2,7 +2,7 @@ import { Budget } from '../../types/budget-types';
 import { database } from '../index.native';
 import BudgetModel from '../models/BudgetModel';
 
-const budgetsCollection = database.get<BudgetModel>('budgets');
+export const budgetsCollection = database.get<BudgetModel>('budgets');
 
 // Add Budget
 export async function addBudget(formData: Budget) {

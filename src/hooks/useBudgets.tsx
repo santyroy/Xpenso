@@ -31,6 +31,7 @@ export const useBudgets = () => {
 
   useEffect(() => {
     setIsLoading(true);
+    setError('');
     const subscription = budgetsCollection
       .query()
       .observe()

@@ -2,6 +2,7 @@ import { Model, Q } from '@nozbe/watermelondb';
 import { database } from '../index.native';
 import { Transaction } from '../../types/transaction-types';
 import TransactionModel from '../models/TransactionModel';
+import BudgetModel from '../models/BudgetModel';
 import { budgetsCollection } from './budget-repository';
 
 export const transactionsCollection =
@@ -164,21 +165,33 @@ export async function createTransactionAndUpdateBudget(formData: Transaction) {
   });
 }
 
-// Update transaction and update budgets
+/**
+ * Updates a transaction and reconciles all affected budgets.
+ * Handles: same category, different category, and date changes.
+ */
 export async function updateTransactionByIdAndUpdateBudget(
   id: string,
   formData: Transaction,
 ) {
-  // find existing transaction
+  // 1. Find the existing transaction
   const existingTx = await transactionsCollection.find(id);
-  if (!existingTx) return;
+  if (!existingTx) throw new Error('Transaction not found');
 
-  return await database.write(async () => {
-    try {
-      // Prepare the operations list
+  try {
+    return await database.write(async () => {
       const operations: Model[] = [];
 
-      // --- STEP 1: REVERT OLD IMPACT ---
+      /**
+       * We use a Map to track how much each budget needs to change.
+       * Key: Budget ID
+       * Value: { model: Budget, netChange: number }
+       */
+      const budgetMap = new Map<
+        string,
+        { model: BudgetModel; netChange: number }
+      >();
+
+      // --- STEP A: CALCULATE REFUND (Old Data) ---
       const oldBudgets = await budgetsCollection
         .query(
           Q.where('category', existingTx.category),
@@ -187,17 +200,14 @@ export async function updateTransactionByIdAndUpdateBudget(
         )
         .fetch();
 
-      operations.push(
-        ...oldBudgets.map(budget =>
-          budget.prepareUpdate(b => {
-            b.spending -= existingTx.amount;
-          }),
-        ),
-      );
+      oldBudgets.forEach(budget => {
+        budgetMap.set(budget.id, {
+          model: budget,
+          netChange: -existingTx.amount, // Subtract the old amount
+        });
+      });
 
-      // --- STEP 2: APPLY NEW IMPACT ---
-      // We query again. Even if it's the same budget, fetch() returns a
-      // NEW object instance, which makes WatermelonDB happy.
+      // --- STEP B: CALCULATE CHARGE (New Data) ---
       const newBudgets = await budgetsCollection
         .query(
           Q.where('category', formData.category.name),
@@ -206,30 +216,53 @@ export async function updateTransactionByIdAndUpdateBudget(
         )
         .fetch();
 
-      operations.push(
-        ...newBudgets.map(budget =>
-          budget.prepareUpdate(b => {
-            b.spending += formData.amount;
-          }),
-        ),
-      );
+      newBudgets.forEach(budget => {
+        const existingEntry = budgetMap.get(budget.id);
+        if (existingEntry) {
+          // If this budget was already in the map (category/date didn't change)
+          // We just add the new amount to the existing negative netChange
+          existingEntry.netChange += formData.amount;
+        } else {
+          // New budget that wasn't affected by the old transaction
+          budgetMap.set(budget.id, {
+            model: budget,
+            netChange: formData.amount,
+          });
+        }
+      });
 
-      // --- STEP 3: UPDATE TRANSACTION ---
-      const updatedTx = existingTx.prepareUpdate(tx => {
+      // --- STEP C: PREPARE BUDGET OPERATIONS ---
+      // Now we only call prepareUpdate ONCE per unique budget
+      budgetMap.forEach(({ model, netChange }) => {
+        // Optimization: If netChange is 0 (e.g., edited a note but not amount/category),
+        // we don't need to update the budget record at all.
+        if (netChange !== 0) {
+          operations.push(
+            model.prepareUpdate(b => {
+              b.spending += netChange;
+            }),
+          );
+        }
+      });
+
+      // --- STEP D: PREPARE TRANSACTION UPDATE ---
+      const updatedTxOperation = existingTx.prepareUpdate(tx => {
         tx.amount = formData.amount;
         tx.category = formData.category.name;
         tx.date = formData.date;
         tx.note = formData.note ?? '';
       });
-      operations.push(updatedTx);
+      operations.push(updatedTxOperation);
 
+      // --- STEP E: ATOMIC BATCH EXECUTE ---
       await database.batch(...operations);
-      return updatedTx;
-    } catch (error) {
-      console.log('Update Transaction and Update Budget Error: ', error);
-      throw error;
-    }
-  });
+
+      return updatedTxOperation;
+    });
+  } catch (error) {
+    console.error('Update Transaction and Budget Error: ', error);
+    throw error;
+  }
 }
 
 // Delete transaction and update budgets

@@ -37,6 +37,21 @@ export async function getAllBudgets() {
   }
 }
 
+// Delete budget by Id
+export async function deleteBudgetById(id: string) {
+  try {
+    const budget = await budgetsCollection.find(id);
+    if (!budget) throw new Error('Budget not found');
+
+    await database.write(async () => {
+      await budget.destroyPermanently();
+    });
+  } catch (error) {
+    console.log('Get All Budgets Error: ', error);
+    throw error;
+  }
+}
+
 // Create Budget and Calculate based on existing transactions
 export async function createBudgetAndCalculateExistingSpending(
   formData: Budget,

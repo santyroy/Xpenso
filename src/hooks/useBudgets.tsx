@@ -1,6 +1,5 @@
-import { useCallback, useState } from 'react';
-import { useFocusEffect } from '@react-navigation/native';
-import { getAllBudgets } from '../db/repository/budget-repository';
+import { useEffect, useState } from 'react';
+import { budgetsCollection } from '../db/repository/budget-repository';
 import BudgetModel from '../db/models/BudgetModel';
 import { extractCategory } from '../utils/categories';
 import { Budget, BudgetType } from '../types/budget-types';
@@ -30,27 +29,26 @@ export const useBudgets = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  useFocusEffect(
-    useCallback(() => {
-      const fetchBudgets = async () => {
-        setIsLoading(true);
-        setError('');
-
-        try {
-          const rows = await getAllBudgets();
+  useEffect(() => {
+    setIsLoading(true);
+    const subscription = budgetsCollection
+      .query()
+      .observe()
+      .subscribe({
+        next: rows => {
           const data = rows.reduce(reducer, [] as Budget[]);
           setBudgets(data);
-        } catch (err) {
+          setIsLoading(false);
+        },
+        error: err => {
           const errMessage = err instanceof Error ? err.message : String(err);
           setError(errMessage);
-        } finally {
           setIsLoading(false);
-        }
-      };
+        },
+      });
 
-      fetchBudgets();
-    }, []),
-  );
+    return () => subscription.unsubscribe();
+  }, []);
 
   return { budgets, isLoading, error };
 };

@@ -52,3 +52,43 @@ export const getTransactionsGroupByMonth = (transactions: Transaction[]) => {
   });
   return report;
 };
+
+export const getExpenseBarChatData = (transactions: Transaction[]) => {
+  return transactions
+    .flatMap(tx => {
+      const isExpense = tx.type === 'expense';
+      return isExpense
+        ? {
+            label: tx.date.getDate().toString(),
+            value: tx.amount,
+          }
+        : [];
+    })
+    .reverse();
+};
+
+type PieData = {
+  label: string;
+  value: number;
+  color: string;
+};
+
+export const getExpensePieChatData = (transactions: Transaction[]) => {
+  const categoryMap = new Map<string, PieData>();
+
+  transactions.forEach(tx => {
+    if (tx.type === 'expense') {
+      const { name, color } = tx.category;
+      if (categoryMap.has(name)) {
+        const existing = categoryMap.get(name);
+        if (existing) {
+          existing.value += tx.amount;
+        }
+      } else {
+        categoryMap.set(name, { label: name, value: tx.amount, color: color });
+      }
+    }
+  });
+
+  return Array.from(categoryMap.values());
+};

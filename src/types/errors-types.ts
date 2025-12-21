@@ -13,4 +13,5 @@ export type BudgetFormError = {
 
 export type SignupFormError = {
   name?: string;
+  country?: string;
 };

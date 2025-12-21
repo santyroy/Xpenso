@@ -1,3 +1,4 @@
+import { StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { useAppTheme } from '../hooks/useAppTheme';
 
@@ -18,6 +19,7 @@ export default function DropDown<T extends string | number>({
       selectedValue={state}
       onValueChange={(itemValue, _) => setState(itemValue)}
       mode="dropdown"
+      style={styles.picker}
     >
       {list?.map(item => (
         <Picker.Item label={item} value={item} color={colors.text} />
@@ -25,3 +27,7 @@ export default function DropDown<T extends string | number>({
     </Picker>
   );
 }
+
+const styles = StyleSheet.create({
+  picker: { marginLeft: 8 },
+});

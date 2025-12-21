@@ -1,12 +1,14 @@
 import { createContext, ReactNode, useEffect, useState } from 'react';
 import { storage } from '../mmkv/storage';
 import { STORAGE_KEYS } from '../mmkv/keys';
+import { getCountryCurrency } from '../utils/text-utils';
 
 type UserContextType = {
   name: string;
   updateName: (name: string) => void;
   hasOnboarded: boolean;
-  completeOnboarding: (name: string) => void;
+  completeOnboarding: (name: string, country: string) => void;
+  currency: string;
   isLoading: boolean;
 };
 
@@ -16,14 +18,17 @@ export const UserContext = createContext<UserContextType | undefined>(
 
 export function UserProvider({ children }: { children: ReactNode }) {
   const [name, setName] = useState('');
+  const [currency, setCurrency] = useState('');
   const [hasOnboarded, setHasOnboarded] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const storedName = storage.getString(STORAGE_KEYS.USER_NAME);
+    const storedCurrency = storage.getString(STORAGE_KEYS.USER_CURRENCY);
     const storedOnboarded = storage.getBoolean(STORAGE_KEYS.HAS_ONBOARDED);
 
     if (storedName) setName(storedName);
+    if (storedCurrency) setCurrency(storedCurrency);
     if (storedOnboarded) setHasOnboarded(storedOnboarded);
 
     setIsLoading(false);
@@ -35,18 +40,28 @@ export function UserProvider({ children }: { children: ReactNode }) {
     storage.set(STORAGE_KEYS.USER_NAME, newName);
   };
 
-  const completeOnboarding = (userName: string) => {
-    if (!userName) return;
+  const completeOnboarding = (userName: string, country: string) => {
+    if (!userName || !country) return;
 
+    const currencySymbol = getCountryCurrency(country) ?? '';
     setName(userName);
+    setCurrency(currencySymbol);
     setHasOnboarded(true);
     storage.set(STORAGE_KEYS.USER_NAME, userName);
+    storage.set(STORAGE_KEYS.USER_CURRENCY, currency);
     storage.set(STORAGE_KEYS.HAS_ONBOARDED, true);
   };
 
   return (
     <UserContext
-      value={{ name, updateName, hasOnboarded, completeOnboarding, isLoading }}
+      value={{
+        name,
+        updateName,
+        hasOnboarded,
+        completeOnboarding,
+        currency,
+        isLoading,
+      }}
     >
       {children}
     </UserContext>

@@ -8,9 +8,10 @@ import { useTransactions } from '../../hooks/useTransactions';
 import { useUser } from '../../hooks/useUser';
 import { getMonthYearString, greetMessage } from '../../utils/text-utils';
 import { getTransactionSummary } from '../../utils/transactions-util';
+import Loading from '../../components/Loading';
 
 export default function HomeScreen() {
-  const { name } = useUser();
+  const { isLoading, name } = useUser();
   const { transactions } = useTransactions({ limit: 0 });
   const greetings = useMemo(() => greetMessage(), []);
   const month = useMemo(() => getMonthYearString(), []);
@@ -20,6 +21,7 @@ export default function HomeScreen() {
   );
   const recentData = useMemo(() => transactions.slice(0, 5), [transactions]);
 
+  if (isLoading) return <Loading />;
   return (
     <SafeAreaView style={styles.container}>
       <Header greetings={greetings} name={name} />

@@ -11,7 +11,6 @@ export default function IncomeAnalytics() {
   });
 
   const incomeByMonth = getTransactionsGroupByMonth(transactions);
-  console.log(incomeByMonth);
 
   if (isLoading) {
     return (

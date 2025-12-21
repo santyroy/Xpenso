@@ -62,6 +62,6 @@ export const getCountryCurrency = (country: string) => {
 export const formatAmount = (amount: number, currency: string) => {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
-    currency: currency,
+    currency: currency || 'INR',
   }).format(amount);
 };

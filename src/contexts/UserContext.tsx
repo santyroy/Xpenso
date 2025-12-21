@@ -18,7 +18,7 @@ export const UserContext = createContext<UserContextType | undefined>(
 
 export function UserProvider({ children }: { children: ReactNode }) {
   const [name, setName] = useState('');
-  const [currency, setCurrency] = useState('');
+  const [currency, setCurrency] = useState('INR');
   const [hasOnboarded, setHasOnboarded] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -43,12 +43,12 @@ export function UserProvider({ children }: { children: ReactNode }) {
   const completeOnboarding = (userName: string, country: string) => {
     if (!userName || !country) return;
 
-    const currencySymbol = getCountryCurrency(country) ?? '';
+    const currencyCode = getCountryCurrency(country) ?? 'INR';
     setName(userName);
-    setCurrency(currencySymbol);
+    setCurrency(currencyCode);
     setHasOnboarded(true);
     storage.set(STORAGE_KEYS.USER_NAME, userName);
-    storage.set(STORAGE_KEYS.USER_CURRENCY, currency);
+    storage.set(STORAGE_KEYS.USER_CURRENCY, currencyCode);
     storage.set(STORAGE_KEYS.HAS_ONBOARDED, true);
   };
 

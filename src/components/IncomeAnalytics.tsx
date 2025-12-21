@@ -3,7 +3,7 @@ import Loading from './Loading';
 import RecentTransactions from './RecentTransactions';
 import { useTransactions } from '../hooks/useTransactions';
 import { getTransactionsGroupByMonth } from '../utils/transactions-util';
-import LineChartAnalytics from './LineChartAnalytics';
+import IncomeLineChartAnalytics from './IncomeLineChartAnalytics';
 
 export default function IncomeAnalytics() {
   const { isLoading, transactions } = useTransactions({
@@ -22,7 +22,7 @@ export default function IncomeAnalytics() {
 
   return (
     <View style={styles.container}>
-      <LineChartAnalytics data={incomeByMonth} />
+      <IncomeLineChartAnalytics data={incomeByMonth} />
       <RecentTransactions transactions={transactions.slice(0, 10)} />
     </View>
   );

@@ -5,7 +5,7 @@ type Props = {
   data: { value: number; label: string }[];
 };
 
-export default function LineChartAnalytics({ data }: Props) {
+export default function IncomeLineChartAnalytics({ data }: Props) {
   const { colors } = useAppTheme();
 
   return (

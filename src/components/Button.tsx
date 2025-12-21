@@ -53,7 +53,15 @@ export default function Button({
   };
 
   return (
-    <Pressable style={[style, styles.btn, getVariantStyle()]} {...rest}>
+    <Pressable
+      style={[style, styles.btn, getVariantStyle()]}
+      android_ripple={{
+        color: 'rgba(255, 255, 255, 0.25)',
+        borderless: false,
+        foreground: true,
+      }}
+      {...rest}
+    >
       <Text
         style={[
           textStyle,
@@ -69,6 +77,11 @@ export default function Button({
 }
 
 const styles = StyleSheet.create({
-  btn: { alignItems: 'center', padding: 15, borderRadius: 14 },
+  btn: {
+    alignItems: 'center',
+    padding: 15,
+    borderRadius: 14,
+    overflow: 'hidden',
+  },
   text: { fontSize: 16 },
 });

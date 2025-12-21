@@ -1,6 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native';
 import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 import { useAppTheme } from '../hooks/useAppTheme';
+import { useUser } from '../hooks/useUser';
+import { formatAmount } from '../utils/text-utils';
 
 type Props = {
   month: string;
@@ -10,7 +12,11 @@ type Props = {
 
 export default function SummaryCard({ month, income, expense }: Props) {
   const { colors } = useAppTheme();
+  const { currency } = useUser();
   const balance = income - expense || 0;
+  const formattedIncome = formatAmount(income, currency);
+  const formattedExpense = formatAmount(expense, currency);
+  const formattedBalance = formatAmount(balance, currency);
 
   return (
     <View style={[styles.container, { backgroundColor: colors.card }]}>
@@ -18,7 +24,7 @@ export default function SummaryCard({ month, income, expense }: Props) {
         <View>
           <Text style={[{ color: colors.text }]}>Total Balance</Text>
           <Text style={[{ color: colors.text }, styles.balanceAmountText]}>
-            Rs. {balance.toLocaleString()}
+            {formattedBalance}
           </Text>
         </View>
         <Text
@@ -42,7 +48,7 @@ export default function SummaryCard({ month, income, expense }: Props) {
           <View>
             <Text style={[{ color: colors.text }]}>Income</Text>
             <Text style={[{ color: colors.text }, styles.transactionText]}>
-              Rs. {income.toLocaleString()}
+              {formattedIncome}
             </Text>
           </View>
         </View>
@@ -56,7 +62,7 @@ export default function SummaryCard({ month, income, expense }: Props) {
           <View>
             <Text style={[{ color: colors.text }]}>Expense</Text>
             <Text style={[{ color: colors.text }, styles.transactionText]}>
-              Rs. {expense.toLocaleString()}
+              {formattedExpense}
             </Text>
           </View>
         </View>

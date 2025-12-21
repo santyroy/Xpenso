@@ -2,7 +2,8 @@ import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
 import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 import { Budget } from '../types/budget-types';
 import { useAppTheme } from '../hooks/useAppTheme';
-import { capitalize } from '../utils/text-utils';
+import { useUser } from '../hooks/useUser';
+import { capitalize, formatAmount } from '../utils/text-utils';
 import { deleteBudgetById } from '../db/repository/budget-repository';
 
 type Props = {
@@ -11,6 +12,7 @@ type Props = {
 
 export default function BudgetCard({ budget }: Props) {
   const { colors } = useAppTheme();
+  const { currency } = useUser();
   let { id, category, amountLimit, spending, startDate, endDate } = budget;
   const categoryName = capitalize(category.name);
 
@@ -25,6 +27,10 @@ export default function BudgetCard({ budget }: Props) {
   const amountSpentText = isOverspent ? 'overspent' : 'left';
   const amountSpentTextColor =
     amountSpent < 0 ? colors.notification : colors.text;
+
+  const formattedAmountLimit = formatAmount(amountLimit, currency);
+  const formattedSpending = formatAmount(spending, currency);
+  const formattedAbsAmountSpent = formatAmount(absAmountSpent, currency);
 
   const handleDeleteBudget = () => {
     Alert.alert('Delete Budget', 'Are you sure?', [
@@ -73,7 +79,7 @@ export default function BudgetCard({ budget }: Props) {
       </View>
       <View style={styles.limitContainer}>
         <Text style={[styles.limitText, { color: colors.text }]}>
-          Rs. {amountLimit}
+          {formattedAmountLimit}
         </Text>
         <Text style={[styles.limitPercentage, { color: colors.text }]}>
           {progressWith}%
@@ -94,12 +100,12 @@ export default function BudgetCard({ budget }: Props) {
       </View>
       <View style={styles.spendingContainer}>
         <Text style={[styles.spendingText, { color: colors.text + 50 }]}>
-          - Rs. {spending} spent
+          - {formattedSpending} spent
         </Text>
         <Text
           style={[styles.spendingLeftText, { color: amountSpentTextColor }]}
         >
-          Rs. {absAmountSpent} {amountSpentText}
+          {formattedAbsAmountSpent} {amountSpentText}
         </Text>
       </View>
       <View style={[styles.dateContainer]}>

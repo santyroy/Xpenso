@@ -1,16 +1,13 @@
 import { StyleSheet, View } from 'react-native';
 import Loading from './Loading';
 import RecentTransactions from './RecentTransactions';
-import { useTransactions } from '../hooks/useTransactions';
+import { useIncomeAnalytics } from '../hooks/useIncomeAnalytics';
 import { getTransactionsGroupByMonth } from '../utils/transactions-util';
 import IncomeLineChartAnalytics from './IncomeLineChartAnalytics';
 
 export default function IncomeAnalytics() {
-  const { isLoading, transactions } = useTransactions({
-    month: new Date().getMonth(),
-  });
-
-  const incomeByMonth = getTransactionsGroupByMonth(transactions);
+  const { income, isLoading } = useIncomeAnalytics();
+  const incomeByMonth = getTransactionsGroupByMonth(income);
 
   if (isLoading) {
     return (
@@ -23,7 +20,7 @@ export default function IncomeAnalytics() {
   return (
     <View style={styles.container}>
       <IncomeLineChartAnalytics data={incomeByMonth} />
-      <RecentTransactions transactions={transactions.slice(0, 10)} />
+      <RecentTransactions transactions={income} />
     </View>
   );
 }

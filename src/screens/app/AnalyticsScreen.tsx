@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { TransactionType } from '../../types/transaction-types';
-import TransactionTypeToggleButtons from '../../components/TransactionTypeToogleButtons';
 import { StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import TransactionTypeToggleButtons from '../../components/TransactionTypeToogleButtons';
 import ExpenseAnalytics from '../../components/ExpenseAnalytics';
 import IncomeAnalytics from '../../components/IncomeAnalytics';
+import { TransactionType } from '../../types/transaction-types';
 
 export default function AnalyticsScreen() {
   const [transactionType, setTransactionType] =

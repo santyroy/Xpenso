@@ -34,3 +34,34 @@ export const getMonthYearString = () =>
   new Date().getFullYear();
 
 export const budgetPeriod: Period[] = ['Daily', 'Weekly', 'Monthly', 'Yearly'];
+
+const countryData = new Map([
+  ['France', { flag: '🇫🇷', currency: 'EUR' }],
+  ['Japan', { flag: '🇯🇵', currency: 'JPY' }],
+  ['Brazil', { flag: '🇧🇷', currency: 'BRL' }],
+  ['Australia', { flag: '🇦🇺', currency: 'AUD' }],
+  ['Egypt', { flag: '🇪🇬', currency: 'EGP' }],
+  ['India', { flag: '🇮🇳', currency: 'INR' }],
+  ['Canada', { flag: '🇨🇦', currency: 'CAD' }],
+  ['Greece', { flag: '🇬🇷', currency: 'EUR' }],
+  ['South Africa', { flag: '🇿🇦', currency: 'ZAR' }],
+  ['Iceland', { flag: '🇮🇸', currency: 'ISK' }],
+  ['USA', { flag: '🇺🇸', currency: 'USD' }],
+  ['UK', { flag: '🇬🇧', currency: 'GBP' }],
+]);
+
+export const countryName = Array.from(countryData).map(
+  ([key, value]) => `${value.flag} ${key}`,
+);
+
+export const getCountryCurrency = (country: string) => {
+  const name = country.split(' ')[1];
+  return countryData.get(name)?.currency;
+};
+
+export const formatAmount = (amount: number, currency: string) => {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: currency,
+  }).format(amount);
+};

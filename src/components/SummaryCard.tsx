@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
+import Loading from './Loading';
 import { useAppTheme } from '../hooks/useAppTheme';
 import { useUser } from '../hooks/useUser';
 import { formatAmount } from '../utils/text-utils';
@@ -12,7 +13,8 @@ type Props = {
 
 export default function SummaryCard({ month, income, expense }: Props) {
   const { colors } = useAppTheme();
-  const { currency } = useUser();
+  const { isLoading, currency } = useUser();
+  if (isLoading) return <Loading />;
   const balance = income - expense || 0;
   const formattedIncome = formatAmount(income, currency);
   const formattedExpense = formatAmount(expense, currency);

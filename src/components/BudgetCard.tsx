@@ -1,5 +1,6 @@
 import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
 import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
+import Loading from './Loading';
 import { Budget } from '../types/budget-types';
 import { useAppTheme } from '../hooks/useAppTheme';
 import { useUser } from '../hooks/useUser';
@@ -12,7 +13,8 @@ type Props = {
 
 export default function BudgetCard({ budget }: Props) {
   const { colors } = useAppTheme();
-  const { currency } = useUser();
+  const { isLoading, currency } = useUser();
+  if (isLoading) return <Loading />;
   let { id, category, amountLimit, spending, startDate, endDate } = budget;
   const categoryName = capitalize(category.name);
 

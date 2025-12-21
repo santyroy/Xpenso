@@ -2,23 +2,32 @@ import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Input from './Input';
 import Label from './Label';
+import DropDown from './DropDown';
 import Button from './Button';
 import Error from './Error';
 import { useUser } from '../hooks/useUser';
+import { useAppTheme } from '../hooks/useAppTheme';
 import { SignupFormError } from '../types/errors-types';
+import { countryName } from '../utils/text-utils';
 
 export default function SignupForm() {
   const [name, setName] = useState('');
+  const [country, setCountry] = useState('');
   const [errors, setErrors] = useState<SignupFormError>({});
   const { completeOnboarding } = useUser();
+  const { colors } = useAppTheme();
 
   const handleSignup = () => {
     setErrors({});
     if (name.trim() === '') {
-      setErrors({ name: 'Name is requied' });
-      return;
+      setErrors(prev => ({ ...prev, name: 'Name is requied' }));
     }
-    completeOnboarding(name.trim());
+    if (country.trim() === '') {
+      setErrors(prev => ({ ...prev, country: 'Country is requied' }));
+    }
+    if (Object.values(errors).length) return;
+
+    completeOnboarding(name.trim(), country.trim());
   };
 
   return (
@@ -34,6 +43,13 @@ export default function SignupForm() {
         />
         {errors.name && <Error errorMsg={errors.name} />}
       </View>
+      <View style={styles.formGroup}>
+        <Label text="Country*" />
+        <View style={[styles.countryDropDown, { borderColor: colors.border }]}>
+          <DropDown list={countryName} state={country} setState={setCountry} />
+        </View>
+        {errors.country && <Error errorMsg={errors.country} />}
+      </View>
       <Button text="Create account" onPress={handleSignup} />
     </View>
   );
@@ -42,4 +58,5 @@ export default function SignupForm() {
 const styles = StyleSheet.create({
   container: { gap: 30 },
   formGroup: { gap: 10 },
+  countryDropDown: { borderWidth: 2, borderRadius: 14, overflow: 'hidden' },
 });

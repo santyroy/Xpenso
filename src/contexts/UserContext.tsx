@@ -9,6 +9,8 @@ type UserContextType = {
   hasOnboarded: boolean;
   completeOnboarding: (name: string, country: string) => void;
   currency: string;
+  country: string;
+  updateCountry: (name: string) => void;
   isLoading: boolean;
 };
 
@@ -18,6 +20,7 @@ export const UserContext = createContext<UserContextType | undefined>(
 
 export function UserProvider({ children }: { children: ReactNode }) {
   const [name, setName] = useState('');
+  const [country, setCountry] = useState('');
   const [currency, setCurrency] = useState('INR');
   const [hasOnboarded, setHasOnboarded] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -25,10 +28,12 @@ export function UserProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const storedName = storage.getString(STORAGE_KEYS.USER_NAME);
     const storedCurrency = storage.getString(STORAGE_KEYS.USER_CURRENCY);
+    const storedCountry = storage.getString(STORAGE_KEYS.USER_COUNTRY);
     const storedOnboarded = storage.getBoolean(STORAGE_KEYS.HAS_ONBOARDED);
 
     if (storedName) setName(storedName);
     if (storedCurrency) setCurrency(storedCurrency);
+    if (storedCountry) setCountry(storedCountry);
     if (storedOnboarded) setHasOnboarded(storedOnboarded);
 
     setIsLoading(false);
@@ -40,14 +45,25 @@ export function UserProvider({ children }: { children: ReactNode }) {
     storage.set(STORAGE_KEYS.USER_NAME, newName);
   };
 
-  const completeOnboarding = (userName: string, country: string) => {
-    if (!userName || !country) return;
+  const updateCountry = (newCountry: string) => {
+    if (!newCountry) return;
+    setCountry(newCountry);
+    storage.set(STORAGE_KEYS.USER_COUNTRY, newCountry);
+    const currencyCode = getCountryCurrency(newCountry) ?? 'INR';
+    setCurrency(currencyCode);
+    storage.set(STORAGE_KEYS.USER_CURRENCY, currencyCode);
+  };
 
-    const currencyCode = getCountryCurrency(country) ?? 'INR';
+  const completeOnboarding = (userName: string, userCountry: string) => {
+    if (!userName || !userCountry) return;
+
+    const currencyCode = getCountryCurrency(userCountry) ?? 'INR';
     setName(userName);
+    setCountry(userCountry);
     setCurrency(currencyCode);
     setHasOnboarded(true);
     storage.set(STORAGE_KEYS.USER_NAME, userName);
+    storage.set(STORAGE_KEYS.USER_COUNTRY, userCountry);
     storage.set(STORAGE_KEYS.USER_CURRENCY, currencyCode);
     storage.set(STORAGE_KEYS.HAS_ONBOARDED, true);
   };
@@ -60,6 +76,8 @@ export function UserProvider({ children }: { children: ReactNode }) {
         hasOnboarded,
         completeOnboarding,
         currency,
+        country,
+        updateCountry,
         isLoading,
       }}
     >

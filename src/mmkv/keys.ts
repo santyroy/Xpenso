@@ -3,4 +3,5 @@ export const STORAGE_KEYS = {
   USER_NAME: 'user.name',
   USER_CURRENCY: 'user.currency',
   USER_COUNTRY: 'user.country',
+  USER_PROFILE_PIC: 'user.profile_pic',
 };

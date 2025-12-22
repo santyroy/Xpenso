@@ -1,14 +1,30 @@
-import { PieChart } from 'react-native-gifted-charts';
-import { useAppTheme } from '../hooks/useAppTheme';
 import { StyleSheet, Text, View } from 'react-native';
-import { capitalize } from '../utils/text-utils';
+import { PieChart } from 'react-native-gifted-charts';
+import Loading from './Loading';
+import { useAppTheme } from '../hooks/useAppTheme';
+import { useUser } from '../hooks/useUser';
+import { capitalize, formatAmount } from '../utils/text-utils';
 
 type Props = {
-  data: { value: number; color: string; label: string }[];
+  totalExpense: number;
+  data: { value: number; color: string; label: string; text: string }[];
 };
 
-export default function ExpensePieChartAnalysis({ data }: Props) {
+export default function ExpensePieChartAnalysis({ totalExpense, data }: Props) {
   const { colors } = useAppTheme();
+  const { currency } = useUser();
+
+  if (!currency) {
+    return <Loading />;
+  }
+
+  const renderCenterLabel = () => {
+    return (
+      <Text style={[styles.centerLabelText, { color: colors.text }]}>
+        {formatAmount(totalExpense, currency)}
+      </Text>
+    );
+  };
 
   const renderLegend = () => {
     return data.map(item => (
@@ -26,6 +42,8 @@ export default function ExpensePieChartAnalysis({ data }: Props) {
         donut
         showText
         innerCircleColor={colors.background}
+        textSize={14}
+        centerLabelComponent={renderCenterLabel}
       />
       <View style={styles.legendContainer}>{renderLegend()}</View>
     </View>
@@ -43,4 +61,5 @@ const styles = StyleSheet.create({
   legend: { flexDirection: 'row', gap: 5, alignItems: 'center' },
   legendView: { height: 10, aspectRatio: 1, borderRadius: 5 },
   legendText: {},
+  centerLabelText: { fontWeight: 600, fontSize: 16 },
 });

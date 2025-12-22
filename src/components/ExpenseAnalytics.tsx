@@ -22,7 +22,7 @@ export default function ExpenseAnalytics() {
   const { colors } = useAppTheme();
 
   const barChartData = getExpenseBarChatData(transactions);
-  const pieChartData = getExpensePieChatData(transactions);
+  const { totalExpense, data } = getExpensePieChatData(transactions);
 
   if (isLoading) {
     return (
@@ -59,7 +59,7 @@ export default function ExpenseAnalytics() {
         />
       )}
 
-      <ExpensePieChartAnalysis data={pieChartData} />
+      <ExpensePieChartAnalysis data={data} totalExpense={totalExpense} />
     </ScrollView>
   );
 }

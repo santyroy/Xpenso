@@ -63,5 +63,7 @@ export const formatAmount = (amount: number, currency: string) => {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: currency || 'INR',
+    minimumFractionDigits: 0, // Remove decimal
+    maximumFractionDigits: 0, // Rounds to nearest whole number
   }).format(amount);
 };

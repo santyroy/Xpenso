@@ -71,13 +71,24 @@ type PieData = {
   label: string;
   value: number;
   color: string;
+  text: string;
 };
 
-export const getExpensePieChatData = (transactions: Transaction[]) => {
+type ExpenseDataResponse = {
+  totalExpense: number;
+  data: PieData[];
+};
+
+export const getExpensePieChatData = (
+  transactions: Transaction[],
+): ExpenseDataResponse => {
+  let totalExpense = 0;
   const categoryMap = new Map<string, PieData>();
 
+  // Expenses group by category
   transactions.forEach(tx => {
     if (tx.type === 'expense') {
+      totalExpense += tx.amount;
       const { name, color } = tx.category;
       if (categoryMap.has(name)) {
         const existing = categoryMap.get(name);
@@ -85,10 +96,27 @@ export const getExpensePieChatData = (transactions: Transaction[]) => {
           existing.value += tx.amount;
         }
       } else {
-        categoryMap.set(name, { label: name, value: tx.amount, color: color });
+        categoryMap.set(name, {
+          label: name,
+          value: tx.amount,
+          color: color,
+          text: '',
+        });
       }
     }
   });
 
-  return Array.from(categoryMap.values());
+  // Calculate expense percent in each category
+
+  const data: PieData[] = Array.from(categoryMap.values(), item => {
+    const percentage =
+      totalExpense > 0 ? ((item.value / totalExpense) * 100).toFixed(0) : '0';
+
+    return {
+      ...item,
+      text: `${percentage}%`,
+    };
+  });
+
+  return { totalExpense, data };
 };

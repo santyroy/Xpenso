@@ -4,16 +4,13 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '../../components/Header';
 import SummaryCard from '../../components/SummaryCard';
 import RecentTransactions from '../../components/RecentTransactions';
-import { useTransactions } from '../../hooks/useTransactions';
-import { useUser } from '../../hooks/useUser';
-import { getMonthYearString, greetMessage } from '../../utils/text-utils';
-import { getTransactionSummary } from '../../utils/transactions-util';
 import Loading from '../../components/Loading';
+import { useTransactions } from '../../hooks/useTransactions';
+import { getMonthYearString } from '../../utils/text-utils';
+import { getTransactionSummary } from '../../utils/transactions-util';
 
 export default function HomeScreen() {
-  const { isLoading, name } = useUser();
-  const { transactions } = useTransactions({ limit: 0 });
-  const greetings = useMemo(() => greetMessage(), []);
+  const { transactions, isLoading } = useTransactions({ limit: 0 });
   const month = useMemo(() => getMonthYearString(), []);
   const { income, expense } = useMemo(
     () => getTransactionSummary(transactions),
@@ -24,7 +21,7 @@ export default function HomeScreen() {
   if (isLoading) return <Loading />;
   return (
     <SafeAreaView style={styles.container}>
-      <Header greetings={greetings} name={name} />
+      <Header />
       <SummaryCard income={income} expense={expense} month={month} />
       <RecentTransactions transactions={recentData} />
     </SafeAreaView>

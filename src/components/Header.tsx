@@ -1,15 +1,21 @@
+import { useMemo } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
+import Loading from './Loading';
 import { useAppTheme } from '../hooks/useAppTheme';
+import { useUser } from '../hooks/useUser';
+import { greetMessage } from '../utils/text-utils';
+import { Dirs } from 'react-native-file-access';
+import { DEFAULT_AVATAR } from '../utils/file-utils';
 
-type Props = {
-  greetings: string;
-  name: string;
-};
-
-export default function Header({ greetings, name }: Props) {
+export default function Header() {
   const { colors } = useAppTheme();
-  const userAvatar = require('../../assets/images/user-avatar.webp');
+  const { isLoading, name, profilePicFilename } = useUser();
+  const greetings = useMemo(() => greetMessage(), []);
+  const userAvatar = profilePicFilename
+    ? { uri: `file://${Dirs.DocumentDir}/${profilePicFilename}` }
+    : DEFAULT_AVATAR;
 
+  if (isLoading) return <Loading />;
   return (
     <View>
       <View style={styles.userDetailsContainer}>

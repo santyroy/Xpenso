@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
+import LinearGradient from 'react-native-linear-gradient';
 import Loading from './Loading';
 import { useAppTheme } from '../hooks/useAppTheme';
 import { useUser } from '../hooks/useUser';
@@ -21,7 +22,10 @@ export default function SummaryCard({ month, income, expense }: Props) {
   const formattedBalance = formatAmount(balance, currency);
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.card }]}>
+    <LinearGradient
+      colors={['#002B12', '#004D20', '#007A33']}
+      style={[styles.container, { backgroundColor: colors.card }]}
+    >
       <View style={styles.balanceContainer}>
         <View>
           <Text style={[{ color: colors.text }]}>Total Balance</Text>
@@ -42,7 +46,7 @@ export default function SummaryCard({ month, income, expense }: Props) {
       <View style={styles.incomeExpenseContainer}>
         <View style={styles.transactionContainer}>
           <FontAwesome6
-            name="arrow-up"
+            name="circle-arrow-up"
             iconStyle="solid"
             color={colors.primary}
             size={24}
@@ -56,7 +60,7 @@ export default function SummaryCard({ month, income, expense }: Props) {
         </View>
         <View style={styles.transactionContainer}>
           <FontAwesome6
-            name="arrow-down"
+            name="circle-arrow-down"
             iconStyle="solid"
             color={colors.notification}
             size={24}
@@ -69,7 +73,7 @@ export default function SummaryCard({ month, income, expense }: Props) {
           </View>
         </View>
       </View>
-    </View>
+    </LinearGradient>
   );
 }
 
@@ -81,7 +85,7 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   balanceContainer: { flexDirection: 'row', justifyContent: 'space-between' },
-  balanceAmountText: { fontSize: 20 },
+  balanceAmountText: { fontSize: 22, fontWeight: 500 },
   balanceMonthText: {
     borderWidth: 1,
     borderRadius: 14,
@@ -94,5 +98,5 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   transactionContainer: { flexDirection: 'row', gap: 15, alignItems: 'center' },
-  transactionText: { fontSize: 16 },
+  transactionText: { fontSize: 16, fontWeight: 500 },
 });

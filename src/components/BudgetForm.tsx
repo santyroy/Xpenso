@@ -9,11 +9,7 @@ import CalendarButton from './CalendarButton';
 import DropDown from './DropDown';
 import Button from './Button';
 import { budgetPeriod } from '../utils/text-utils';
-import {
-  generateBudgetEndDate,
-  generateTimestamp,
-  validateBudgetForm,
-} from '../utils/form-utils';
+import { generateBudgetEndDate, validateBudgetForm } from '../utils/form-utils';
 import { expenseCategories } from '../utils/categories';
 import { useAppTheme } from '../hooks/useAppTheme';
 import { BudgetFormData, Category, Period } from '../types/budget-types';
@@ -42,7 +38,7 @@ export default function BudgetForm() {
     if (validateBudgetForm(formData, setErrors)) {
       if (!category) return;
       const budgetAmt = parseFloat(amountLimit);
-      const budgetStartDate = generateTimestamp(startDate);
+      const budgetStartDate = new Date(startDate);
       const budgetEndDate = generateBudgetEndDate(startDate, period);
 
       await createBudgetAndCalculateExistingSpending({

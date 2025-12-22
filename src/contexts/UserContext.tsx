@@ -2,6 +2,7 @@ import { createContext, ReactNode, useEffect, useState } from 'react';
 import { storage } from '../mmkv/storage';
 import { STORAGE_KEYS } from '../mmkv/keys';
 import { getCountryCurrency } from '../utils/text-utils';
+import { persistProfileImage } from '../utils/file-utils';
 
 type UserContextType = {
   name: string;
@@ -11,6 +12,8 @@ type UserContextType = {
   currency: string;
   country: string;
   updateCountry: (name: string) => void;
+  profilePicFilename: string;
+  updateProfilePic: (file: string) => void;
   isLoading: boolean;
 };
 
@@ -22,6 +25,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
   const [name, setName] = useState('');
   const [country, setCountry] = useState('');
   const [currency, setCurrency] = useState('INR');
+  const [profilePicFilename, setProfilePic] = useState('');
   const [hasOnboarded, setHasOnboarded] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -29,11 +33,15 @@ export function UserProvider({ children }: { children: ReactNode }) {
     const storedName = storage.getString(STORAGE_KEYS.USER_NAME);
     const storedCurrency = storage.getString(STORAGE_KEYS.USER_CURRENCY);
     const storedCountry = storage.getString(STORAGE_KEYS.USER_COUNTRY);
+    const storedProfilePicFilename = storage.getString(
+      STORAGE_KEYS.USER_PROFILE_PIC,
+    );
     const storedOnboarded = storage.getBoolean(STORAGE_KEYS.HAS_ONBOARDED);
 
     if (storedName) setName(storedName);
     if (storedCurrency) setCurrency(storedCurrency);
     if (storedCountry) setCountry(storedCountry);
+    if (storedProfilePicFilename) setProfilePic(storedProfilePicFilename);
     if (storedOnboarded) setHasOnboarded(storedOnboarded);
 
     setIsLoading(false);
@@ -52,6 +60,12 @@ export function UserProvider({ children }: { children: ReactNode }) {
     const currencyCode = getCountryCurrency(newCountry) ?? 'INR';
     setCurrency(currencyCode);
     storage.set(STORAGE_KEYS.USER_CURRENCY, currencyCode);
+  };
+
+  const updateProfilePic = async (file: string) => {
+    const fileName = await persistProfileImage(file);
+    setProfilePic(fileName);
+    storage.set(STORAGE_KEYS.USER_PROFILE_PIC, fileName);
   };
 
   const completeOnboarding = (userName: string, userCountry: string) => {
@@ -78,6 +92,8 @@ export function UserProvider({ children }: { children: ReactNode }) {
         currency,
         country,
         updateCountry,
+        profilePicFilename,
+        updateProfilePic,
         isLoading,
       }}
     >

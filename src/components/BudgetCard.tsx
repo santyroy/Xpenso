@@ -84,7 +84,7 @@ export default function BudgetCard({ budget }: Props) {
           {formattedAmountLimit}
         </Text>
         <Text style={[styles.limitPercentage, { color: colors.text }]}>
-          {progressWith}%
+          {progressWith.toFixed(2)}%
         </Text>
       </View>
       <View

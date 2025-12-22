@@ -26,5 +26,5 @@ export default function AnalyticsScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, gap: 20 },
+  container: { flex: 1, paddingHorizontal: 15, paddingTop: 10, gap: 20 },
 });

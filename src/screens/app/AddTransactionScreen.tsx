@@ -62,7 +62,7 @@ export default function AddTransactionScreen({ route, navigation }: Props) {
       keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 100}
       style={styles.container}
     >
-      <View style={styles.toggleBtnContainer}>
+      <View>
         <TransactionTypeToggleButtons
           transactionType={transactionType}
           setTransactionType={setTransactionType}
@@ -90,7 +90,6 @@ export default function AddTransactionScreen({ route, navigation }: Props) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
-  toggleBtnContainer: { marginTop: 20 },
+  container: { flex: 1, paddingHorizontal: 15, paddingTop: 10 },
   scrollViewContent: { paddingBottom: 10 },
 });

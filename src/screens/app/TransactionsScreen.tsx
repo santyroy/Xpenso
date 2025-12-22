@@ -38,7 +38,7 @@ export default function TransactionsScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20 },
+  container: { flex: 1, paddingHorizontal: 15, paddingTop: 20 },
   dropdownContainer: {
     width: '60%',
     marginHorizontal: 'auto',

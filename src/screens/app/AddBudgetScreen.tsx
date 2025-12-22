@@ -24,6 +24,6 @@ export default function AddBudgetScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
+  container: { flex: 1, paddingHorizontal: 15, paddingTop: 10 },
   scrollViewContent: { paddingBottom: 10 },
 });

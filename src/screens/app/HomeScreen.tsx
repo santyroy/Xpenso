@@ -29,5 +29,5 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, gap: 20, paddingHorizontal: 10 },
+  container: { flex: 1, gap: 20, paddingHorizontal: 15, paddingTop: 10 },
 });

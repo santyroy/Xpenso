@@ -142,7 +142,7 @@ export default function ProfileScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, paddingHorizontal: 20, gap: 20 },
+  container: { flex: 1, paddingHorizontal: 15, paddingTop: 10, gap: 20 },
   loadingContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   profileContainer: { alignItems: 'center', marginHorizontal: 'auto' },
   profilePicture: { height: 100, aspectRatio: 1, borderRadius: 50 },

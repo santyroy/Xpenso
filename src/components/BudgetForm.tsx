@@ -114,11 +114,7 @@ export default function BudgetForm() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 20,
-    paddingHorizontal: 20,
-    gap: 30,
-  },
+  container: { marginTop: 20, gap: 30 },
   formGroup: { gap: 10 },
   inputArea: { height: 100 },
   calendarBtn: {

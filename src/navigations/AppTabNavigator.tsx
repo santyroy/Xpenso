@@ -25,6 +25,7 @@ export default function AppTabNavigator() {
           borderTopStartRadius: 15,
           borderEndStartRadius: 15,
         },
+        animation: 'shift',
       }}
     >
       <Tab.Screen

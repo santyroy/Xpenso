@@ -26,6 +26,7 @@ export default function ProfileScreen() {
   const [userCountry, setUserCountry] = useState(country);
   const [errors, setErrors] = useState<SignupFormError>({});
   const { colors } = useAppTheme();
+  const userAvatar = require('../../../assets/images/user-avatar.webp');
 
   // Keep the local input in sync with the Context data
   useFocusEffect(
@@ -72,12 +73,7 @@ export default function ProfileScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.profileContainer}>
-        <Image
-          source={{
-            uri: 'https://www.headshotpro.com/avatar-results/danny-1.webp',
-          }}
-          style={styles.profilePicture}
-        />
+        <Image source={userAvatar} style={styles.profilePicture} />
       </View>
       <Text style={[styles.userInfoText, { color: colors.text }]}>
         User Information

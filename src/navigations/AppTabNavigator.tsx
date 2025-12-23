@@ -1,5 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { AppTabParamList } from '../types/navigation-types';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { AppParamList, AppTabParamList } from '../types/navigation-types';
 import HomeScreen from '../screens/app/HomeScreen';
 import AnalyticsScreen from '../screens/app/AnalyticsScreen';
 import BudgetScreen from '../screens/app/BudgetScreen';
@@ -47,6 +48,16 @@ export default function AppTabNavigator() {
         name="AddTransactionButton"
         component={EmptyScreen}
         options={{ tabBarButton: NewTransactionButton }}
+        listeners={({ navigation }) => ({
+          tabPress: e => {
+            e.preventDefault();
+            const parentStack =
+              navigation.getParent<NativeStackNavigationProp<AppParamList>>();
+            if (parentStack) {
+              parentStack.navigate('AddTransaction');
+            }
+          },
+        })}
       />
       <Tab.Screen
         name="Budget"

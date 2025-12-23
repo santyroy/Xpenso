@@ -1,24 +1,18 @@
 import { Pressable, StyleSheet, View } from 'react-native';
-import { useNavigation, useTheme } from '@react-navigation/native';
+import { useTheme } from '@react-navigation/native';
 import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { AppParamList } from '../types/navigation-types';
+import { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs';
 
-type NavigationProp = NativeStackNavigationProp<AppParamList>;
-
-export default function NewTransactionButton() {
+export default function NewTransactionButton({
+  onPress,
+}: BottomTabBarButtonProps) {
   const { colors } = useTheme();
-  const navigation = useNavigation<NavigationProp>();
-
-  const handleAddTransaction = () => {
-    navigation.navigate('AddTransaction');
-  };
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <Pressable
         style={[styles.button, { backgroundColor: colors.primary }]}
-        onPress={handleAddTransaction}
+        onPress={onPress}
       >
         <FontAwesome6 name="plus" iconStyle="solid" size={24} />
       </Pressable>

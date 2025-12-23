@@ -18,8 +18,16 @@ export default function AppNavigator() {
         component={AppTabNavigator}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="AddBudget" component={AddBudgetScreen} />
-      <Stack.Screen name="AddTransaction" component={AddTransactionScreen} />
+      <Stack.Screen
+        name="AddBudget"
+        component={AddBudgetScreen}
+        options={{ headerTitle: 'Add Budget' }}
+      />
+      <Stack.Screen
+        name="AddTransaction"
+        component={AddTransactionScreen}
+        options={{ headerTitle: 'Add Transaction' }}
+      />
       <Stack.Screen name="Transactions" component={TransactionsScreen} />
     </Stack.Navigator>
   );

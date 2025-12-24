@@ -57,8 +57,8 @@ export default function BudgetForm() {
       setStartDate('');
       setPeriod('Daily');
 
-      // navigate to home screen
-      navigation.navigate('AppTabs', { screen: 'Budget' });
+      // navigate back
+      navigation.goBack();
     }
   };
 

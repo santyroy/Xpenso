@@ -68,8 +68,8 @@ export default function IncomeForm({
       setDate('');
       setNote('');
 
-      // navigate to home screen
-      navigation.navigate('AppTabs', { screen: 'Home' });
+      // navigate to previous screen
+      navigation.goBack();
     }
   };
 
@@ -101,8 +101,8 @@ export default function IncomeForm({
       setDate('');
       setNote('');
 
-      // navigate to home screen
-      navigation.navigate('AppTabs', { screen: 'Home' });
+      // navigate to previous screen
+      navigation.goBack();
     }
   };
 

@@ -26,6 +26,7 @@ export default function CalendarButton({ setDate, ...rest }: Props) {
       onChange: onDateChange,
       mode: 'date',
       is24Hour: true,
+      maximumDate: new Date(),
     });
   };
 

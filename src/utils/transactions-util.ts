@@ -54,17 +54,25 @@ export const getTransactionsGroupByMonth = (transactions: Transaction[]) => {
 };
 
 export const getExpenseBarChatData = (transactions: Transaction[]) => {
-  return transactions
-    .flatMap(tx => {
-      const isExpense = tx.type === 'expense';
-      return isExpense
-        ? {
-            label: tx.date.getDate().toString(),
-            value: tx.amount,
-          }
-        : [];
-    })
-    .reverse();
+  const result = new Map<string, number>();
+  transactions.forEach(tx => {
+    const isExpense = tx.type === 'expense';
+    const label = tx.date.getDate().toString();
+    const value = tx.amount;
+    const isExist = result.has(label);
+    if (isExpense) {
+      if (isExist) {
+        const currValue = result.get(label);
+        currValue
+          ? result.set(label, currValue + value)
+          : result.set(label, value);
+      } else {
+        result.set(label, value);
+      }
+    }
+  });
+
+  return Array.from(result, ([label, value]) => ({ label, value })).reverse();
 };
 
 type PieData = {

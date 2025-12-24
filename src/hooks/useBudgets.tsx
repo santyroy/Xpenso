@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useIsFocused } from '@react-navigation/native';
 import { budgetsCollection } from '../db/repository/budget-repository';
 import BudgetModel from '../db/models/BudgetModel';
 import { extractCategory } from '../utils/categories';
@@ -28,6 +29,7 @@ export const useBudgets = () => {
   const [budgets, setBudgets] = useState<Budget[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     setIsLoading(true);
@@ -49,7 +51,7 @@ export const useBudgets = () => {
       });
 
     return () => subscription.unsubscribe();
-  }, []);
+  }, [isFocused]);
 
   return { budgets, isLoading, error };
 };

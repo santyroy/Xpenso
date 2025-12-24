@@ -28,6 +28,17 @@ export const months = [
   'December',
 ];
 
+export const generatePreviousYears = (count: number = 10) => {
+  const currentYear = new Date().getFullYear();
+  const years: string[] = [];
+
+  for (let i = 0; i < count; i++) {
+    years.push(String(currentYear - i));
+  }
+
+  return years.reverse();
+};
+
 export const getMonthYearString = () =>
   months[new Date().getMonth()].substring(0, 3) +
   ' ' +

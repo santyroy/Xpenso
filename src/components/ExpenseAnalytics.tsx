@@ -40,9 +40,13 @@ export default function ExpenseAnalytics() {
       style={styles.container}
       contentContainerStyle={styles.contentStyle}
     >
-      <View style={[styles.monthsContainer, { backgroundColor: colors.card }]}>
-        <DropDown list={months} state={month} setState={setMonth} />
-        <DropDown list={years} state={year} setState={setYear} />
+      <View style={styles.dropdownContainer}>
+        <View style={[styles.dateContainer, { backgroundColor: colors.card }]}>
+          <DropDown list={months} state={month} setState={setMonth} />
+        </View>
+        <View style={[styles.dateContainer, { backgroundColor: colors.card }]}>
+          <DropDown list={years} state={year} setState={setYear} />
+        </View>
       </View>
 
       {barChartData.length ? (
@@ -75,6 +79,12 @@ const styles = StyleSheet.create({
     paddingRight: 16,
     borderRadius: 20,
   },
-  monthsContainer: { paddingLeft: 10, overflow: 'hidden', borderRadius: 12 },
+  dropdownContainer: { flexDirection: 'row', gap: 10 },
+  dateContainer: {
+    flex: 1,
+    paddingLeft: 10,
+    overflow: 'hidden',
+    borderRadius: 12,
+  },
   barChartContainer: { padding: 20, alignItems: 'center', overflow: 'hidden' },
 });

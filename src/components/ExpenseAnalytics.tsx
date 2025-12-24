@@ -7,7 +7,7 @@ import ExpenseBarChartAnalysis from './ExpenseBarChartAnalysis';
 import ExpensePieChartAnalysis from './ExpensePieChartAnalysis';
 import { useAppTheme } from '../hooks/useAppTheme';
 import { useTransactions } from '../hooks/useTransactions';
-import { months } from '../utils/text-utils';
+import { generatePreviousYears, months } from '../utils/text-utils';
 import {
   getExpenseBarChatData,
   getExpensePieChatData,
@@ -15,14 +15,17 @@ import {
 
 export default function ExpenseAnalytics() {
   const [month, setMonth] = useState(months[new Date().getMonth()]);
+  const [year, setYear] = useState(String(new Date().getFullYear()));
   const { isLoading, transactions } = useTransactions({
     limit: 0,
     month: months.indexOf(month),
+    year: parseInt(year, 10),
   });
   const { colors } = useAppTheme();
 
   const barChartData = getExpenseBarChatData(transactions);
   const { totalExpense, data } = getExpensePieChatData(transactions);
+  const years = generatePreviousYears();
 
   if (isLoading) {
     return (
@@ -39,6 +42,7 @@ export default function ExpenseAnalytics() {
     >
       <View style={[styles.monthsContainer, { backgroundColor: colors.card }]}>
         <DropDown list={months} state={month} setState={setMonth} />
+        <DropDown list={years} state={year} setState={setYear} />
       </View>
 
       {barChartData.length ? (

@@ -27,11 +27,13 @@ const reducer = (acc: Transaction[], curr: TransactionModel): Transaction[] => {
 type Props = {
   limit?: number;
   month?: number;
+  year?: number;
 };
 
 export const useTransactions = ({
   limit = 10,
   month = new Date().getMonth(),
+  year = new Date().getFullYear(),
 }: Props = {}) => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -45,8 +47,8 @@ export const useTransactions = ({
       limit && limit > 0
         ? getTransactionsSubcriptionByLimit(limit)
         : getTransactionsSubcriptionByDateRange(
-            new Date(new Date().getFullYear(), month, 1),
-            new Date(new Date().getFullYear(), month + 1, 0),
+            new Date(year, month, 1),
+            new Date(year, month + 1, 0),
           );
 
     const subscription = observable.subscribe({
@@ -63,7 +65,7 @@ export const useTransactions = ({
     });
 
     return () => subscription.unsubscribe();
-  }, [limit, month]);
+  }, [limit, month, year]);
 
   return { transactions, isLoading, error };
 };

@@ -7,7 +7,7 @@ import ExpenseBarChartAnalysis from './ExpenseBarChartAnalysis';
 import ExpensePieChartAnalysis from './ExpensePieChartAnalysis';
 import { useAppTheme } from '../hooks/useAppTheme';
 import { useTransactions } from '../hooks/useTransactions';
-import { months } from '../utils/text-utils';
+import { generatePreviousYears, months } from '../utils/text-utils';
 import {
   getExpenseBarChatData,
   getExpensePieChatData,
@@ -15,14 +15,17 @@ import {
 
 export default function ExpenseAnalytics() {
   const [month, setMonth] = useState(months[new Date().getMonth()]);
+  const [year, setYear] = useState(String(new Date().getFullYear()));
   const { isLoading, transactions } = useTransactions({
     limit: 0,
     month: months.indexOf(month),
+    year: parseInt(year, 10),
   });
   const { colors } = useAppTheme();
 
   const barChartData = getExpenseBarChatData(transactions);
   const { totalExpense, data } = getExpensePieChatData(transactions);
+  const years = generatePreviousYears();
 
   if (isLoading) {
     return (
@@ -37,8 +40,13 @@ export default function ExpenseAnalytics() {
       style={styles.container}
       contentContainerStyle={styles.contentStyle}
     >
-      <View style={[styles.monthsContainer, { backgroundColor: colors.card }]}>
-        <DropDown list={months} state={month} setState={setMonth} />
+      <View style={styles.dropdownContainer}>
+        <View style={[styles.dateContainer, { backgroundColor: colors.card }]}>
+          <DropDown list={months} state={month} setState={setMonth} />
+        </View>
+        <View style={[styles.dateContainer, { backgroundColor: colors.card }]}>
+          <DropDown list={years} state={year} setState={setYear} />
+        </View>
       </View>
 
       {barChartData.length ? (
@@ -71,6 +79,12 @@ const styles = StyleSheet.create({
     paddingRight: 16,
     borderRadius: 20,
   },
-  monthsContainer: { paddingLeft: 10, overflow: 'hidden', borderRadius: 12 },
+  dropdownContainer: { flexDirection: 'row', gap: 10 },
+  dateContainer: {
+    flex: 1,
+    paddingLeft: 10,
+    overflow: 'hidden',
+    borderRadius: 12,
+  },
   barChartContainer: { padding: 20, alignItems: 'center', overflow: 'hidden' },
 });

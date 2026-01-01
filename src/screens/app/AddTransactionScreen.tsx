@@ -53,6 +53,7 @@ export default function AddTransactionScreen({ route, navigation }: Props) {
       headerRight: transactionToEdit
         ? () => <DeleteButton onPress={handleDelete} />
         : undefined,
+      headerTitle: transactionToEdit ? 'Edit Transaction' : 'Add Transaction',
     });
   }, [navigation, transactionToEdit, handleDelete]);
 

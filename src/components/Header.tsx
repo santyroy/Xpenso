@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import Loading from './Loading';
 import { useAppTheme } from '../hooks/useAppTheme';
@@ -10,7 +9,7 @@ import { DEFAULT_AVATAR } from '../utils/file-utils';
 export default function Header() {
   const { colors } = useAppTheme();
   const { isLoading, name, profilePicFilename } = useUser();
-  const greetings = useMemo(() => greetMessage(), []);
+  const greetings = greetMessage();
   const userAvatar = profilePicFilename
     ? { uri: `file://${Dirs.DocumentDir}/${profilePicFilename}` }
     : DEFAULT_AVATAR;

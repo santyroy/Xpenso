@@ -1,5 +1,6 @@
 import { BarChart } from 'react-native-gifted-charts';
 import { useAppTheme } from '../hooks/useAppTheme';
+import { formatYLabelBarChart } from '../utils/text-utils';
 
 type Props = {
   data: { label: string; value: number }[];
@@ -15,8 +16,9 @@ export default function ExpenseBarChartAnalysis({ data }: Props) {
       isAnimated
       xAxisLabelTextStyle={{ color: colors.text }}
       yAxisTextStyle={{ color: colors.text }}
+      yAxisLabelWidth={60}
       rulesColor={colors.text + 50}
-      noOfSections={5}
+      formatYLabel={formatYLabelBarChart}
     />
   );
 }

@@ -86,5 +86,9 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderRadius: 12,
   },
-  barChartContainer: { padding: 20, alignItems: 'center', overflow: 'hidden' },
+  barChartContainer: {
+    paddingVertical: 20,
+    alignItems: 'center',
+    overflow: 'hidden',
+  },
 });

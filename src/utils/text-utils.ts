@@ -78,3 +78,8 @@ export const formatAmount = (amount: number, currency: string) => {
     maximumFractionDigits: 0, // Rounds to nearest whole number
   }).format(amount);
 };
+
+export const formatYLabelBarChart = (label: string) => {
+  const parsedLabel = parseFloat(label);
+  return parsedLabel >= 1000 ? `${Math.trunc(parsedLabel / 1000)}k` : label;
+};

@@ -14,6 +14,7 @@ export default function TransactionsScreen() {
   const { transactions } = useTransactions({
     limit: 0,
     month: months.indexOf(selectedMonth),
+    year: parseInt(year, 10),
   });
   const { colors } = useAppTheme();
 

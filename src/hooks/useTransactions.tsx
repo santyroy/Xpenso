@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import {
   getTransactionsSubcriptionByDateRange,
   getTransactionsSubcriptionByLimit,
@@ -39,33 +40,35 @@ export const useTransactions = ({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    setIsLoading(true);
-    setError('');
+  useFocusEffect(
+    useCallback(() => {
+      setIsLoading(true);
+      setError('');
 
-    const observable =
-      limit && limit > 0
-        ? getTransactionsSubcriptionByLimit(limit)
-        : getTransactionsSubcriptionByDateRange(
-            new Date(year, month, 1),
-            new Date(year, month + 1, 0),
-          );
+      const observable =
+        limit && limit > 0
+          ? getTransactionsSubcriptionByLimit(limit)
+          : getTransactionsSubcriptionByDateRange(
+              new Date(year, month, 1),
+              new Date(year, month + 1, 0),
+            );
 
-    const subscription = observable.subscribe({
-      next: rows => {
-        const data = rows.reduce(reducer, [] as Transaction[]);
-        setTransactions(data);
-        setIsLoading(false); // Data arrived!
-      },
-      error: err => {
-        const errorMessage = err instanceof Error ? err.message : String(err);
-        setError('Error: ' + errorMessage);
-        setIsLoading(false);
-      },
-    });
+      const subscription = observable.subscribe({
+        next: rows => {
+          const data = rows.reduce(reducer, [] as Transaction[]);
+          setTransactions(data);
+          setIsLoading(false); // Data arrived!
+        },
+        error: err => {
+          const errorMessage = err instanceof Error ? err.message : String(err);
+          setError('Error: ' + errorMessage);
+          setIsLoading(false);
+        },
+      });
 
-    return () => subscription.unsubscribe();
-  }, [limit, month, year]);
+      return () => subscription.unsubscribe();
+    }, [limit, month, year]),
+  );
 
   return { transactions, isLoading, error };
 };

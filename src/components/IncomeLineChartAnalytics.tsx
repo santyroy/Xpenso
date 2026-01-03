@@ -28,6 +28,8 @@ export default function IncomeLineChartAnalytics({ data }: Props) {
       xAxisLabelTextStyle={{ color: colors.text }}
       yAxisTextStyle={{ color: colors.text }}
       noOfSections={5}
+      xAxisThickness={0}
+      yAxisThickness={0}
     />
   );
 }

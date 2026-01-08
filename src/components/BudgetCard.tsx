@@ -40,8 +40,10 @@ export default function BudgetCard({ budget }: Props) {
       {
         text: 'OK',
         style: 'destructive',
-        onPress: async () => {
-          await deleteBudgetById(id);
+        onPress: () => {
+          (async () => {
+            await deleteBudgetById(id);
+          })();
         },
       },
     ]);

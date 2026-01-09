@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useEffect, useState } from 'react';
+import { createContext, ReactNode, useEffect, useMemo, useState } from 'react';
 import { storage } from '../mmkv/storage';
 import { STORAGE_KEYS } from '../mmkv/keys';
 import { getCountryCurrency } from '../utils/text-utils';
@@ -83,22 +83,21 @@ export function UserProvider({ children }: Readonly<{ children: ReactNode }>) {
     storage.set(STORAGE_KEYS.HAS_ONBOARDED, true);
   };
 
-  return (
-    <UserContext
-      value={{
-        name,
-        updateName,
-        hasOnboarded,
-        completeOnboarding,
-        currency,
-        country,
-        updateCountry,
-        profilePicFilename,
-        updateProfilePic,
-        isLoading,
-      }}
-    >
-      {children}
-    </UserContext>
+  const contextValue = useMemo(
+    () => ({
+      name,
+      updateName,
+      hasOnboarded,
+      completeOnboarding,
+      currency,
+      country,
+      updateCountry,
+      profilePicFilename,
+      updateProfilePic,
+      isLoading,
+    }),
+    [country, currency, hasOnboarded, isLoading, name, profilePicFilename],
   );
+
+  return <UserContext value={contextValue}>{children}</UserContext>;
 }

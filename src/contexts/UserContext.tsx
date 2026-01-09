@@ -13,7 +13,7 @@ type UserContextType = {
   country: string;
   updateCountry: (name: string) => void;
   profilePicFilename: string;
-  updateProfilePic: (file: string) => void;
+  updateProfilePic: (file: string) => Promise<void>;
   isLoading: boolean;
 };
 

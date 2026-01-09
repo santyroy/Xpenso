@@ -8,7 +8,7 @@ import {
 import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 import { useAppTheme } from '../hooks/useAppTheme';
 
-export default function BudgetHeader(props: PressableProps) {
+export default function BudgetHeader(props: Readonly<PressableProps>) {
   const { colors } = useAppTheme();
 
   return (

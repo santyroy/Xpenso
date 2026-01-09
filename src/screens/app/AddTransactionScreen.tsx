@@ -40,9 +40,11 @@ export default function AddTransactionScreen({ route, navigation }: Props) {
       {
         text: 'Delete',
         style: 'destructive',
-        onPress: async () => {
-          await deleteTransactionByIdAndUpdateBudget(transactionToEdit.id);
-          navigation.goBack();
+        onPress: () => {
+          (async () => {
+            await deleteTransactionByIdAndUpdateBudget(transactionToEdit.id);
+            navigation.goBack();
+          })();
         },
       },
     ]);

@@ -12,7 +12,11 @@ type Props = {
   expense: number;
 };
 
-export default function SummaryCard({ month, income, expense }: Props) {
+export default function SummaryCard({
+  month,
+  income,
+  expense,
+}: Readonly<Props>) {
   const { colors } = useAppTheme();
   const { isLoading, currency } = useUser();
   if (isLoading) return <Loading />;

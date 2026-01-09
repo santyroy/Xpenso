@@ -12,7 +12,7 @@ export default function TransactionTypeButton({
   transactionType,
   setTransactionType,
   type,
-}: Props) {
+}: Readonly<Props>) {
   const { colors } = useTheme();
   const text = type[0].toUpperCase() + type.substring(1);
   return (

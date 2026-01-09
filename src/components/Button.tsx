@@ -28,18 +28,16 @@ export default function Button({
   const { colors, fonts } = useAppTheme();
 
   const getVariantStyle = (): ViewStyle => {
-    switch (variant) {
-      case 'outline':
-        return {
-          backgroundColor: 'transparent',
-          borderWidth: 2,
-          borderColor: colors.primary,
-        };
-      case 'secondary':
-        return { backgroundColor: colors.secondary };
-      case 'primary':
-      default:
-        return { backgroundColor: colors.primary };
+    if (variant === 'outline') {
+      return {
+        backgroundColor: 'transparent',
+        borderWidth: 2,
+        borderColor: colors.primary,
+      };
+    } else if (variant === 'secondary') {
+      return { backgroundColor: colors.secondary };
+    } else {
+      return { backgroundColor: colors.primary };
     }
   };
 

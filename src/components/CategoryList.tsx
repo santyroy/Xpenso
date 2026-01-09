@@ -8,7 +8,7 @@ type Props = {
   setState: (state: Category) => void;
 };
 
-export default function CategoryList({ data, ...props }: Props) {
+export default function CategoryList({ data, ...props }: Readonly<Props>) {
   if (data.length === 0) return;
 
   return (

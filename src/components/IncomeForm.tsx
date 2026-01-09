@@ -31,7 +31,7 @@ type IncomeFormProps = {
 export default function IncomeForm({
   navigation,
   transactionToEdit,
-}: IncomeFormProps) {
+}: Readonly<IncomeFormProps>) {
   const [amount, setAmount] = useState(
     transactionToEdit?.amount.toString() ?? '',
   );

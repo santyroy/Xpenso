@@ -8,7 +8,7 @@ type Props = {
   setTransactionType: (type: TransactionType) => void;
 };
 
-export default function TransactionTypeToggleButtons(props: Props) {
+export default function TransactionTypeToggleButtons(props: Readonly<Props>) {
   const { colors } = useTheme();
 
   return (

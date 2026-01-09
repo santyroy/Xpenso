@@ -10,7 +10,10 @@ type Props = {
   data: { value: number; color: string; label: string; text: string }[];
 };
 
-export default function ExpensePieChartAnalysis({ totalExpense, data }: Props) {
+export default function ExpensePieChartAnalysis({
+  totalExpense,
+  data,
+}: Readonly<Props>) {
   const { colors } = useAppTheme();
   const { currency } = useUser();
 

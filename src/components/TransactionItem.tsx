@@ -10,7 +10,7 @@ type Props = {
   item: Transaction;
 };
 
-export default function TransactionItem({ item }: Props) {
+export default function TransactionItem({ item }: Readonly<Props>) {
   const {
     amount,
     category: { name, iconName, color },

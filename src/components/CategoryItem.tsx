@@ -14,7 +14,11 @@ const GAP = 24;
 const NUM_COLUMNS = 4;
 const ITEM_WIDTH = (screenWidth - GAP * (NUM_COLUMNS - 1)) / NUM_COLUMNS;
 
-export default function CategoryIcon({ category, state, setState }: Props) {
+export default function CategoryIcon({
+  category,
+  state,
+  setState,
+}: Readonly<Props>) {
   const { colors } = useAppTheme();
   const categoryName =
     category.name[0].toUpperCase() + category.name.substring(1);

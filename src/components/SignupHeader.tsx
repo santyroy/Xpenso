@@ -6,7 +6,7 @@ type Props = {
   pageTitle: string;
 };
 
-export default function SignupHeader({ pageTitle }: Props) {
+export default function SignupHeader({ pageTitle }: Readonly<Props>) {
   const { colors } = useAppTheme();
   return (
     <View style={styles.headerContainer}>

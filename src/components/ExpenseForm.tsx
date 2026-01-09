@@ -31,7 +31,7 @@ type ExpenseFormProps = {
 export default function ExpenseForm({
   navigation,
   transactionToEdit,
-}: ExpenseFormProps) {
+}: Readonly<ExpenseFormProps>) {
   const [amount, setAmount] = useState(
     transactionToEdit?.amount.toString() ?? '',
   );

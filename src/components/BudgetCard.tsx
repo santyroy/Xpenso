@@ -11,7 +11,7 @@ type Props = {
   budget: Budget;
 };
 
-export default function BudgetCard({ budget }: Props) {
+export default function BudgetCard({ budget }: Readonly<Props>) {
   const { colors } = useAppTheme();
   const { isLoading, currency } = useUser();
   if (isLoading) return <Loading />;

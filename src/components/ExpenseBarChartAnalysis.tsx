@@ -6,7 +6,7 @@ type Props = {
   data: { label: string; value: number }[];
 };
 
-export default function ExpenseBarChartAnalysis({ data }: Props) {
+export default function ExpenseBarChartAnalysis({ data }: Readonly<Props>) {
   const { colors } = useAppTheme();
   // 1. Find the highest single value
   const highestValue = Math.max(...data.map(item => item.value), 0);

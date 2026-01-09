@@ -9,7 +9,7 @@ type Props = {
   transactions: Transaction[];
 };
 
-export default function RecentTransactions({ transactions }: Props) {
+export default function RecentTransactions({ transactions }: Readonly<Props>) {
   const { colors } = useAppTheme();
   const navigation = useNavigation<HomeCompositeNavigationProp>();
 

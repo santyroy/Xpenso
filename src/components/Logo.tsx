@@ -1,6 +1,6 @@
 import Svg, { Path, SvgProps } from 'react-native-svg';
 
-export default function Logo(props: SvgProps) {
+export default function Logo(props: Readonly<SvgProps>) {
   return (
     <Svg width={669} height={717} viewBox="0 0 669 717" {...props}>
       <Path

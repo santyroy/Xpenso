@@ -7,7 +7,7 @@ type Props = {
   transactions: Transaction[];
 };
 
-export default function TransactionList({ transactions }: Props) {
+export default function TransactionList({ transactions }: Readonly<Props>) {
   return (
     <FlatList
       data={transactions}

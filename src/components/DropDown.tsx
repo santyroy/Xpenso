@@ -12,7 +12,7 @@ export default function DropDown<T extends string | number>({
   list,
   state,
   setState,
-}: Props<T>) {
+}: Readonly<Props<T>>) {
   const { colors } = useAppTheme();
   return (
     <Picker
@@ -22,7 +22,7 @@ export default function DropDown<T extends string | number>({
       style={styles.picker}
     >
       {list?.map(item => (
-        <Picker.Item label={item} value={item} color={colors.text} />
+        <Picker.Item key={item} label={item} value={item} color={colors.text} />
       ))}
     </Picker>
   );

@@ -21,11 +21,11 @@ export const UserContext = createContext<UserContextType | undefined>(
   undefined,
 );
 
-export function UserProvider({ children }: { children: ReactNode }) {
+export function UserProvider({ children }: Readonly<{ children: ReactNode }>) {
   const [name, setName] = useState('');
   const [country, setCountry] = useState('');
   const [currency, setCurrency] = useState('INR');
-  const [profilePicFilename, setProfilePic] = useState('');
+  const [profilePicFilename, setProfilePicFilename] = useState('');
   const [hasOnboarded, setHasOnboarded] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -41,7 +41,8 @@ export function UserProvider({ children }: { children: ReactNode }) {
     if (storedName) setName(storedName);
     if (storedCurrency) setCurrency(storedCurrency);
     if (storedCountry) setCountry(storedCountry);
-    if (storedProfilePicFilename) setProfilePic(storedProfilePicFilename);
+    if (storedProfilePicFilename)
+      setProfilePicFilename(storedProfilePicFilename);
     if (storedOnboarded) setHasOnboarded(storedOnboarded);
 
     setIsLoading(false);
@@ -64,7 +65,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
 
   const updateProfilePic = async (file: string) => {
     const fileName = await persistProfileImage(file);
-    setProfilePic(fileName);
+    setProfilePicFilename(fileName);
     storage.set(STORAGE_KEYS.USER_PROFILE_PIC, fileName);
   };
 

@@ -7,7 +7,7 @@ type Props = {
   budgets: Budget[];
 };
 
-export default function BudgetList({ budgets }: Props) {
+export default function BudgetList({ budgets }: Readonly<Props>) {
   return (
     <FlatList
       data={budgets}

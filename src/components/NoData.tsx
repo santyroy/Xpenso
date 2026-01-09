@@ -6,7 +6,7 @@ type Props = {
   description: string;
 };
 
-export default function NoData({ title, description }: Props) {
+export default function NoData({ title, description }: Readonly<Props>) {
   const { colors } = useAppTheme();
   return (
     <View style={styles.container}>

@@ -80,6 +80,6 @@ export const formatAmount = (amount: number, currency: string) => {
 };
 
 export const formatYLabelBarChart = (label: string) => {
-  const parsedLabel = parseFloat(label);
+  const parsedLabel = Number.parseFloat(label);
   return parsedLabel >= 1000 ? `${Math.trunc(parsedLabel / 1000)}k` : label;
 };

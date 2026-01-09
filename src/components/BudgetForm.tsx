@@ -37,7 +37,7 @@ export default function BudgetForm() {
     };
     if (validateBudgetForm(formData, setErrors)) {
       if (!category) return;
-      const budgetAmt = parseFloat(amountLimit);
+      const budgetAmt = Number.parseFloat(amountLimit);
       const budgetStartDate = new Date(startDate);
       const budgetEndDate = generateBudgetEndDate(startDate, period);
 

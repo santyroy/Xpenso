@@ -52,7 +52,7 @@ export default function IncomeForm({
     };
     if (validateTransactionForm(formData, setErrors)) {
       if (!category) return;
-      const expAmt = parseFloat(amount);
+      const expAmt = Number.parseFloat(amount);
       const expDate = generateTimestamp(date);
       await addTransaction({
         ...formData,
@@ -83,7 +83,7 @@ export default function IncomeForm({
     };
     if (validateTransactionForm(formData, setErrors)) {
       if (!category) return;
-      const expAmt = parseFloat(amount);
+      const expAmt = Number.parseFloat(amount);
       const expDate = generateTimestamp(date);
 
       if (!transactionToEdit?.id) return;

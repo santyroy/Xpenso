@@ -52,7 +52,7 @@ export default function ExpenseForm({
     };
     if (validateTransactionForm(formData, setErrors)) {
       if (!category) return;
-      const expAmt = parseFloat(amount);
+      const expAmt = Number.parseFloat(amount);
       const expDate = generateTimestamp(date);
       await createTransactionAndUpdateBudget({
         ...formData,
@@ -83,7 +83,7 @@ export default function ExpenseForm({
     };
     if (validateTransactionForm(formData, setErrors)) {
       if (!category) return;
-      const expAmt = parseFloat(amount);
+      const expAmt = Number.parseFloat(amount);
       const expDate = generateTimestamp(date);
 
       if (!transactionToEdit?.id) return;

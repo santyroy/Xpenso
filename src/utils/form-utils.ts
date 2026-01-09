@@ -67,7 +67,7 @@ export const validateTransactionForm = (
 
   if (amount === '') {
     err.amount = 'Amount is required';
-  } else if (isNaN(parseFloat(amount))) {
+  } else if (isNaN(Number.parseFloat(amount))) {
     err.amount = 'Invalid Amount';
   }
   if (!category) {
@@ -92,7 +92,7 @@ export const validateBudgetForm = (
 
   if (amountLimit === '') {
     err.amountLimit = 'Amount Limit is required';
-  } else if (isNaN(parseFloat(amountLimit))) {
+  } else if (isNaN(Number.parseFloat(amountLimit))) {
     err.amountLimit = 'Invalid Amount';
   }
   if (!category) {

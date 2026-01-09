@@ -67,7 +67,7 @@ export const validateTransactionForm = (
 
   if (amount === '') {
     err.amount = 'Amount is required';
-  } else if (isNaN(Number.parseFloat(amount))) {
+  } else if (Number.isNaN(Number.parseFloat(amount))) {
     err.amount = 'Invalid Amount';
   }
   if (!category) {
@@ -75,7 +75,7 @@ export const validateTransactionForm = (
   }
   if (date === '') {
     err.date = 'Date is required';
-  } else if (isNaN(Date.parse(date))) {
+  } else if (Number.isNaN(Date.parse(date))) {
     err.date = 'Invalid Date';
   }
 
@@ -92,7 +92,7 @@ export const validateBudgetForm = (
 
   if (amountLimit === '') {
     err.amountLimit = 'Amount Limit is required';
-  } else if (isNaN(Number.parseFloat(amountLimit))) {
+  } else if (Number.isNaN(Number.parseFloat(amountLimit))) {
     err.amountLimit = 'Invalid Amount';
   }
   if (!category) {
@@ -100,7 +100,7 @@ export const validateBudgetForm = (
   }
   if (startDate === '') {
     err.startDate = 'Date is required';
-  } else if (isNaN(Date.parse(startDate))) {
+  } else if (Number.isNaN(Date.parse(startDate))) {
     err.startDate = 'Invalid Date';
   }
   if (!budgetPeriod.includes(period)) {

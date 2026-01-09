@@ -19,7 +19,7 @@ export default function ExpenseAnalytics() {
   const { isLoading, transactions } = useTransactions({
     limit: 0,
     month: months.indexOf(month),
-    year: parseInt(year, 10),
+    year: Number.parseInt(year, 10),
   });
   const { colors } = useAppTheme();
 

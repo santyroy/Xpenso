@@ -4,7 +4,7 @@ import Input from './Input';
 import Label from './Label';
 import DropDown from './DropDown';
 import Button from './Button';
-import Error from './Error';
+import ErrorMessage from './ErrorMessage';
 import { useUser } from '../hooks/useUser';
 import { useAppTheme } from '../hooks/useAppTheme';
 import { SignupFormError } from '../types/errors-types';
@@ -41,14 +41,14 @@ export default function SignupForm() {
           autoCapitalize="words"
           autoCorrect={false}
         />
-        {errors.name && <Error errorMsg={errors.name} />}
+        {errors.name && <ErrorMessage errorMsg={errors.name} />}
       </View>
       <View style={styles.formGroup}>
         <Label text="Country*" />
         <View style={[styles.countryDropDown, { borderColor: colors.border }]}>
           <DropDown list={countryName} state={country} setState={setCountry} />
         </View>
-        {errors.country && <Error errorMsg={errors.country} />}
+        {errors.country && <ErrorMessage errorMsg={errors.country} />}
       </View>
       <Button text="Create account" onPress={handleSignup} />
     </View>

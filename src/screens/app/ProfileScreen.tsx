@@ -16,7 +16,7 @@ import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import Loading from '../../components/Loading';
-import Error from '../../components/Error';
+import ErrorMessage from '../../components/ErrorMessage';
 import Label from '../../components/Label';
 import DropDown from '../../components/DropDown';
 import { useUser } from '../../hooks/useUser';
@@ -120,7 +120,7 @@ export default function ProfileScreen() {
         <View style={styles.formGroup}>
           <Label text="Name" />
           <Input state={userName} setState={setUserName} />
-          {errors.name && <Error errorMsg={errors.name} />}
+          {errors.name && <ErrorMessage errorMsg={errors.name} />}
         </View>
         <View style={styles.formGroup}>
           <Label text="Country" />
@@ -133,7 +133,7 @@ export default function ProfileScreen() {
               setState={setUserCountry}
             />
           </View>
-          {errors.country && <Error errorMsg={errors.country} />}
+          {errors.country && <ErrorMessage errorMsg={errors.country} />}
         </View>
         <Button text="Update Profile" onPress={handleUpdateProfile} />
       </View>

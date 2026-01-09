@@ -5,7 +5,7 @@ import Input from './Input';
 import Button from './Button';
 import CalendarButton from './CalendarButton';
 import CategoryList from './CategoryList';
-import Error from './Error';
+import ErrorMessage from './ErrorMessage';
 import { expenseCategories } from '../utils/categories';
 import {
   Category,
@@ -116,7 +116,7 @@ export default function ExpenseForm({
           placeholder="Enter Amount"
           keyboardType="decimal-pad"
         />
-        {errors.amount && <Error errorMsg={errors.amount} />}
+        {errors.amount && <ErrorMessage errorMsg={errors.amount} />}
       </View>
       <View style={styles.formGroup}>
         <Label text="Category*" />
@@ -125,7 +125,7 @@ export default function ExpenseForm({
           state={category}
           setState={setCategory}
         />
-        {errors.category && <Error errorMsg={errors.category} />}
+        {errors.category && <ErrorMessage errorMsg={errors.category} />}
       </View>
       <View style={styles.formGroup}>
         <Label text="Date*" />
@@ -137,7 +137,7 @@ export default function ExpenseForm({
             hitSlop={20}
           />
         </View>
-        {errors.date && <Error errorMsg={errors.date} />}
+        {errors.date && <ErrorMessage errorMsg={errors.date} />}
       </View>
       <View style={styles.formGroup}>
         <Label text="Note(optional)" />

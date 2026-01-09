@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Label from './Label';
 import Input from './Input';
-import Error from './Error';
+import ErrorMessage from './ErrorMessage';
 import CategoryList from './CategoryList';
 import CalendarButton from './CalendarButton';
 import DropDown from './DropDown';
@@ -72,7 +72,7 @@ export default function BudgetForm() {
           placeholder="Enter Amount"
           keyboardType="decimal-pad"
         />
-        {errors?.amountLimit && <Error errorMsg={errors.amountLimit} />}
+        {errors?.amountLimit && <ErrorMessage errorMsg={errors.amountLimit} />}
       </View>
       <View style={styles.formGroup}>
         <Label text="Category*" />
@@ -81,7 +81,7 @@ export default function BudgetForm() {
           state={category}
           setState={setCategory}
         />
-        {errors?.category && <Error errorMsg={errors.category} />}
+        {errors?.category && <ErrorMessage errorMsg={errors.category} />}
       </View>
       <View style={styles.formGroup}>
         <Label text="Start Date*" />
@@ -93,14 +93,14 @@ export default function BudgetForm() {
             hitSlop={20}
           />
         </View>
-        {errors?.startDate && <Error errorMsg={errors.startDate} />}
+        {errors?.startDate && <ErrorMessage errorMsg={errors.startDate} />}
       </View>
       <View style={styles.formGroup}>
         <Label text="Period*" />
         <View style={[styles.period, { borderColor: colors.border }]}>
           <DropDown list={budgetPeriod} state={period} setState={setPeriod} />
         </View>
-        {errors?.period && <Error errorMsg={errors.period} />}
+        {errors?.period && <ErrorMessage errorMsg={errors.period} />}
       </View>
       <View>
         <Button

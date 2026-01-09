@@ -4,7 +4,7 @@ import { useAppTheme } from '../hooks/useAppTheme';
 
 type Props = { errorMsg: string };
 
-export default function Error({ errorMsg }: Props) {
+export default function ErrorMessage({ errorMsg }: Props) {
   const { colors } = useAppTheme();
   return (
     <View style={styles.container}>

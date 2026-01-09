@@ -2,7 +2,7 @@ import { Model } from '@nozbe/watermelondb';
 import { field, text, date } from '@nozbe/watermelondb/decorators';
 
 export default class BudgetModel extends Model {
-  static table = 'budgets';
+  static readonly table = 'budgets';
 
   @text('type') type!: string;
   @field('amountLimit') amountLimit!: number;

@@ -2,7 +2,7 @@ import { Model } from '@nozbe/watermelondb';
 import { field, text, date } from '@nozbe/watermelondb/decorators';
 
 export default class TransactionModel extends Model {
-  static table = 'transactions';
+  static readonly table = 'transactions';
 
   @text('type') type!: string;
   @field('amount') amount!: number;

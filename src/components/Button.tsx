@@ -42,11 +42,10 @@ export default function Button({
   };
 
   const getTextStyle = (): TextStyle => {
-    switch (variant) {
-      case 'outline':
-        return { color: colors.primary };
-      default:
-        return { color: colors.text };
+    if (variant === 'outline') {
+      return { color: colors.primary };
+    } else {
+      return { color: colors.text };
     }
   };
 

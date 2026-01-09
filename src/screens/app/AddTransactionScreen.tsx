@@ -26,7 +26,10 @@ type Props = {
   route: AddTransactionScreenRouteProp;
 };
 
-export default function AddTransactionScreen({ route, navigation }: Props) {
+export default function AddTransactionScreen({
+  route,
+  navigation,
+}: Readonly<Props>) {
   const transactionToEdit = route.params?.transaction;
   const [transactionType, setTransactionType] = useState<TransactionType>(
     transactionToEdit?.type || 'expense',

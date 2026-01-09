@@ -9,7 +9,7 @@ type Props = {
   navigation: BudgetCompositeNavigationProp;
 };
 
-export default function BudgetScreen({ navigation }: Props) {
+export default function BudgetScreen({ navigation }: Readonly<Props>) {
   const navigateToAddBudget = () => {
     navigation.navigate('AddBudget');
   };

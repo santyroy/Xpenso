@@ -5,12 +5,12 @@ export type Props = {
   size: number;
 };
 
-export function HomeIcon({ color, size }: Props) {
+export function HomeIcon({ color, size }: Readonly<Props>) {
   return (
     <FontAwesome6 name="house" color={color} size={size} iconStyle="solid" />
   );
 }
-export function AnalyticsIcon({ color, size }: Props) {
+export function AnalyticsIcon({ color, size }: Readonly<Props>) {
   return (
     <FontAwesome6
       name="chart-column"
@@ -20,7 +20,7 @@ export function AnalyticsIcon({ color, size }: Props) {
     />
   );
 }
-export function BudgetIcon({ color, size }: Props) {
+export function BudgetIcon({ color, size }: Readonly<Props>) {
   return (
     <FontAwesome6
       name="bag-shopping"
@@ -30,7 +30,7 @@ export function BudgetIcon({ color, size }: Props) {
     />
   );
 }
-export function ProfileIcon({ color, size }: Props) {
+export function ProfileIcon({ color, size }: Readonly<Props>) {
   return (
     <FontAwesome6 name="user" color={color} size={size} iconStyle="solid" />
   );

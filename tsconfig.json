@@ -2,5 +2,5 @@
   "extends": "@react-native/typescript-config",
   "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["**/node_modules", "**/Pods"],
-  "compilerOptions": { "experimentalDecorators": true }
+  "compilerOptions": { "experimentalDecorators": true, "types": ["jest"] }
 }

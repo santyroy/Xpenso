@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import { Dirs, FileSystem } from 'react-native-file-access';
 import { storage } from '../mmkv/storage';
 import { STORAGE_KEYS } from '../mmkv/keys';
@@ -33,5 +34,44 @@ export const persistProfileImage = async (tempUri: string) => {
   } catch (error) {
     console.error('Local-first storage failed:', error);
     throw error;
+  }
+};
+
+export const persistBackupData = async (jsonString: string) => {
+  // Generate formatted filename
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+  const date = String(currentDate.getDate()).padStart(2, '0');
+  const hours = String(currentDate.getHours()).padStart(2, '0');
+  const mins = String(currentDate.getMinutes()).padStart(2, '0');
+  const secs = String(currentDate.getSeconds()).padStart(2, '0');
+  const fileName = `xpenso_backup_${year}${month}${date}_${hours}${mins}${secs}.json`;
+
+  try {
+    if (Platform.OS === 'ios') {
+      // iOS: Save directly to DocumentDir (Visible in Files app via Info.plist)
+      const path = `${Dirs.DocumentDir}/${fileName}`;
+      await FileSystem.writeFile(path, jsonString, 'utf8');
+      console.log('iOS Backup saved to Documents:', path);
+    } else {
+      // Android: Save to Cache first, then copy to Public Downloads
+      const tempPath = `${Dirs.CacheDir}/${fileName}`;
+      await FileSystem.writeFile(tempPath, jsonString, 'utf8');
+
+      const publicPath = await FileSystem.cpExternal(
+        tempPath,
+        fileName,
+        'downloads',
+      );
+      console.log('Android Backup exported to Downloads:', publicPath);
+
+      // Clean up the temp file from cache
+      await FileSystem.unlink(tempPath);
+    }
+    return fileName;
+  } catch (error) {
+    console.error('Export failed:', error);
+    throw error; // Re-throw so the UI can catch it and show an error toast
   }
 };

@@ -24,6 +24,7 @@ import { useAppTheme } from '../../hooks/useAppTheme';
 import { SignupFormError } from '../../types/errors-types';
 import { countryName } from '../../utils/text-utils';
 import { DEFAULT_AVATAR } from '../../utils/file-utils';
+import { BackupRestoreDB } from '../../components/BackupRestoreDB';
 
 export default function ProfileScreen() {
   const {
@@ -113,10 +114,10 @@ export default function ProfileScreen() {
           />
         </Pressable>
       </View>
-      <Text style={[styles.userInfoText, { color: colors.text }]}>
-        User Information
-      </Text>
       <View style={[styles.userInfoCard, { backgroundColor: colors.card }]}>
+        <Text style={[styles.userInfoText, { color: colors.text }]}>
+          User Information
+        </Text>
         <View style={styles.formGroup}>
           <Label text="Name" />
           <Input state={userName} setState={setUserName} />
@@ -137,6 +138,7 @@ export default function ProfileScreen() {
         </View>
         <Button text="Update Profile" onPress={handleUpdateProfile} />
       </View>
+      <BackupRestoreDB />
     </SafeAreaView>
   );
 }

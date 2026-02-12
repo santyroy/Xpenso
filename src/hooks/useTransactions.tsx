@@ -49,8 +49,8 @@ export const useTransactions = ({
         limit && limit > 0
           ? getTransactionsSubcriptionByLimit(limit)
           : getTransactionsSubcriptionByDateRange(
-              new Date(year, month, 1),
-              new Date(year, month + 1, 0),
+              new Date(year, month, 1), // First day of the month at 00:00:00.000
+              new Date(year, month + 1, 1), // First day of the NEXT month at 00:00:00.000
             );
 
       const subscription = observable.subscribe({
